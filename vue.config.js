@@ -1,9 +1,7 @@
 const path = require('path')
-const address = require('address')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
-const ip = address.ip()
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
@@ -21,7 +19,6 @@ module.exports = {
     productionSourceMap: false,
     runtimeCompiler: true,
     devServer: {
-        host: ip || 'localhost',
         port: 8010,
         proxy: {
             '/api': {
@@ -33,6 +30,10 @@ module.exports = {
             }
         }
     },
+    // 默认情况下，babel-loader不解析node_modules中的文件，配置这个参数可以显式的解析Node_modules中的某个依赖
+    transpileDependencies: [
+        /gem-pub-lib/
+    ],
 
     // 显示打包中loader和plugin中花费的时间
     configureWebpack: smp.wrap({}),
@@ -51,7 +52,8 @@ module.exports = {
         })
 
         config.resolve.alias
-        .set('@', resolve('src'))
+            .set('@', resolve('src'))
+            .set('publib', resolve('/node_modules/gem-pub-lib/packages'))
 
         // 自动引入scss
         const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
@@ -82,6 +84,14 @@ module.exports = {
         //                 }
         //             }
         //         }
+        //     }
+        // })
+        // config.module.rule('js').use('babel-loader').tap(args => {
+        //     return {
+        //         exclude: [
+        //             /!node_modules[\\/]gem-pub-lib/
+        //         ],
+        //         // include: /gem\-pub\-lib/
         //     }
         // })
     },
