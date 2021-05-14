@@ -102,8 +102,8 @@ function addStyleResource (rule) {
         .loader('style-resources-loader')
         .options({
         patterns: [
-            // path.resolve(__dirname, './src/assets/css/mixin.scss'),
-            // path.resolve(__dirname, './src/assets/css/common.scss')
+            path.resolve(__dirname, './src/assets/css/mixin.scss'),
+            path.resolve(__dirname, './src/assets/css/common.scss')
         ]
     })
 }

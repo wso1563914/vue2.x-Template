@@ -1,0 +1,317 @@
+@import './elmentUi-reset.scss';
+[v-cloak] {
+    display: none;
+}
+
+.p-clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.gem-flex-1{
+    flex: 1;
+}
+/*element样式*/
+.gem-table{
+    border: 1px solid $border-base;
+    border-bottom: 0;
+}
+.gem-pagination{
+    text-align: right;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+/*flex布局常用*/
+.gem-flex-center{
+    @include flex(center, center);
+    width: 100%;
+    box-sizing: border-box;
+}
+.gem-flex-start-center{
+    @include flex(flex-start, center);
+    box-sizing: border-box;
+}
+.gem-flex-sb-center{
+    @include flex(space-between, center);
+    width: 100%;
+    box-sizing: border-box;
+}
+.gem-flex-sb-start{
+    @include flex(space-between, flex-start);
+}
+.gem-flex{
+    @include flex;
+}
+.gem-flexD{
+    @include flexD;
+}
+.gem-flex-wrap{
+    flex-wrap: wrap;
+}
+.gem-float-l{
+    float: left;
+}
+.gem-float-r{
+    float: right;
+}
+.p-border-radio-4{
+    border-radius: 4px;
+}
+/*常用title标题样式*/
+.gem-title{
+    font-size: 16px;
+    font-weight: bold;
+    color: $primary-text;
+    line-height: 22px;
+    padding: 16px 24px;
+}
+/*粗体*/
+.p-bold{
+    font-weight: bold;
+}
+
+.p-color-ff4{
+    color: $negative-color;
+}
+.gem-text-align-r{
+    text-align: right;
+}
+.gem-text-align-c{
+    text-align: center;
+}
+/*鼠标手*/
+.gem-pointer{
+    cursor: pointer;
+    &:active{
+        opacity: 0.6;
+    }
+}
+/*下划线*/
+.p-underline{
+    text-decoration: underline;
+}
+/*副侧边栏collapse组件样式修改*/
+.p-nav-collapse{
+    border: 0;
+    .el-collapse-item{
+        .el-collapse-item__header{
+            height: 40px;
+            border-bottom: 0;
+            box-sizing: border-box;
+            border-right: 2px solid transparent;
+            font-size: 14px;
+            color: $regular-text;
+            // &.is-active{
+            //     color: $default-color;
+            //     border-color: $default-color;
+            //     .el-collapse-item__arrow{
+            //         color: $regular-text;
+            //     }
+            // }
+        }
+        .el-collapse-item__wrap{
+            border: 0;
+            .el-collapse-item__content{
+                padding-bottom: 0;
+                padding-top: 10px;
+            }
+        }
+    }
+    .collapse-item{
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        color: $regular-text;
+    }
+}
+
+.el-button+.el-button {
+    margin-left: 24px;
+}
+
+.el-form-item {
+    margin-bottom: 16px;
+    &.is-error{
+        margin-bottom: 24px;
+    }
+}
+.flex-box {
+    @include flexD;
+    height: 100%;
+}
+.flex-row {
+    @include flex(flex-start, center);
+}
+.p-content-part{
+    @include flexD(space-between, center);
+    padding: 0 24px;
+    overflow: auto;
+}
+.gem-float-r {
+    float: right;
+}
+//必输必选关键字
+.p-color-star{
+    color: $negative-color;
+}
+// 滚动条
+::-webkit-scrollbar{
+    width: 6px;
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background-color: rgba(144,147,153,.3);
+}
+::-webkit-scrollbar:horizontal{
+    height: 6px;
+}
+
+// 对不能选择的多选框的勾勾加深颜色
+.el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
+    background: #C0C7D0;
+    &:after {
+        border: 2px solid #FFF;
+        border-left: 0;
+        border-top: 0;
+    }
+}
+// formItem左边label
+.el-form-item__label {
+    padding-right: 4px;
+    color: $regular-text;
+}
+.el-input__inner {
+    border-color: $border-light;
+}
+
+.el-table{
+    border: 1px solid $border-base;
+    border-bottom: none;
+    .el-table__fixed-right-patch{
+        background: $gray-bg;
+    }
+}
+.gem-file {
+    position: relative;
+    display: inline-block;
+    background: $default-color;
+    border: 0;
+    border-radius: 4px;
+    padding: 8px 26px;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 24px;
+    input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    &:hover {
+        background: $default-hover;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.gem-float-l{
+    float: left;
+}
+.gem-float-r{
+    float: right;
+}
+
+.p-el-btn {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #FFF;
+    border: 1px solid #C0C7D0;
+    color: #303235;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #FFF;
+    background-color: #26BEE6;
+    border-color: #26BEE6;
+    &:hover {
+        background: #51cbeb;
+        border-color: #51cbeb;
+        color: #FFF;
+    }
+}
+
+.mint-cell .mint-cell-wrapper{
+    background: none;
+}
+.border-1px{
+    position: relative;
+    &::after{
+        content: '';
+        width: vw(690);
+        height: 1px;
+        background-color: $border-base;
+        position: absolute;
+        left: vw(30);
+        bottom: 0;
+        transform: scaleY(0.5);
+    }
+}
+.el-select-dropdown{
+    max-width: 80%;
+}
+.mint-button--primary{
+    background-color: $default-color;
+}
+.el-select__tags{
+    max-height: 80px;
+    overflow-y: scroll;
+}
+.el-dialog{
+    .el-dialog__header{
+        padding: 0 20px;
+        height: 48px;
+        background: $background;
+        line-height: 48px;
+        font-size: 16px;
+        color: $regular-text;
+        border-radius: 4px 4px 0 0;
+        .el-dialog__headerbtn{
+            top: 13px;
+        }
+        .el-dialog__title {
+            font-weight: 600;
+        }
+    }
+}
+.gem-right-box{
+    padding: 20px;
+}
+.formCancel{
+    .el-button:nth-of-type(1){
+        padding: 8px 20px;
+    }
+    .el-button:nth-of-type(2){
+        padding: 8px 20px;
+        margin-left:20px !important;
+    }
+}
+// 下拉框不要箭头
+.popper__arrow{
+    display: none !important;
+}

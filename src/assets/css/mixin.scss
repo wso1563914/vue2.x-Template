@@ -1,0 +1,159 @@
+// 颜色集合
+$block-bg: #131827;
+$black-bg: #01151A;
+$black1-bg: #002933;
+$black2-bg: #001216;
+$wirte-bg: #f3f5f7;
+$gray-bg: #F5F7F9;
+
+// 主题颜色
+$default-color: #5656E8;
+$default-hover: #51cbeb;
+$positive-color: #55c22f;
+$warning-color: #ffb032;
+$negative-color: #ff4545;
+$gray-color: #9fa5ac;
+$meun-bg-color: #131827;
+// 字体颜色
+$primary-text: #222222;
+$regular-text: #61677A;
+$secondary-text: #9EA7B4;
+$placeholder-text: $secondary-text;
+
+// 边框颜色
+$border-base: #D7DDE4;
+$border-light: #EAEEF2;
+
+// 分割颜色
+$split-color: $border-light;
+
+// 背景颜色
+$background: #F2F6FA;
+$card: #F5F7F9;
+
+/*遍历生成margin,padding*/
+$list-num: 0, 3, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 30, 32, 34, 36, 40, 48, 56, 60, 64, 66, 72, 74, 80, 150, 160, 240, auto;
+@each $val in $list-num {
+	.gem-mt-#{$val} {
+        @if $val == auto {
+            margin-top: $val !important;
+        } @else {
+            margin-top: $val + px !important;
+        }
+	}
+	.gem-mb-#{$val} {
+        @if $val == auto {
+            margin-bottom: $val !important;
+        } @else {
+            margin-bottom: $val + px !important;
+        }
+	}
+	.gem-ml-#{$val} {
+        @if $val == auto {
+            margin-left: $val !important;
+        } @else {
+            margin-left: $val + px !important;
+        }
+	}
+	.gem-mr-#{$val} {
+        @if $val == auto {
+            margin-right: $val !important;
+        } @else {
+            margin-right: $val + px !important;
+        }
+	}
+	.gem-pt-#{$val} {
+        @if $val == auto {
+            padding-top: 0 !important;
+        } @else {
+            padding-top: $val + px !important;
+        }
+	}
+	.gem-pb-#{$val} {
+        @if $val == auto {
+            padding-bottom:0 !important;
+        } @else {
+            padding-bottom: $val + px !important;
+        }
+	}
+	.gem-pl-#{$val} {
+        @if $val == auto {
+            padding-left: 0 !important;
+        } @else {
+            padding-left: $val + px !important;
+        }
+	}
+	.gem-pr-#{$val} {
+        @if $val == auto {
+            padding-right: 0 !important;
+        } @else {
+            padding-right: $val + px !important;
+        }
+    }
+    .gem-pa-#{$val} {
+        padding: $val + px;
+    }
+    .gem-ma-#{$val} {
+        margin: $val + px;
+    }
+}
+/*遍历生成最小宽度集合*/
+$list-Widths: 300,400,500,600,800,1000,1200;
+@each $val in $list-Widths {
+  .gem-minWidth#{$val} {
+    min-width: (1px * $val) !important;
+  }
+}
+
+/*遍历生成input宽度集合*/
+$list-inputWidths: 100, 120, 140, 145, 150, 160, 164, 170, 180, 200, 250, 300, 360, 400, 440, 458, 470;
+@each $val in $list-inputWidths {
+    .gem-input#{$val} {
+        display: inline-block;
+        .el-input {
+            width: (1px * $val) !important;
+        }
+    }
+}
+
+/* 单行省略 */
+@mixin gem-elli($width: 100%) {
+	width: $width;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+/* 多行省略 */
+@mixin gem-mutilElli($width: 100%, $line:2) {
+	width: $width;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: $line;
+	-webkit-box-orient: vertical;
+}
+/* 弹性盒 */
+@mixin flex($x: flex-start, $y: stretch) {
+	display: flex;
+	justify-content: $x;
+	align-items: $y;
+}
+/* 弹性盒 */
+@mixin flexD($x: flex-start, $y: stretch) {
+	display: flex;
+    flex-direction: column;
+	justify-content: $x;
+	align-items: $y;
+}
+
+@mixin clearfix() {
+    &:before, &:after {
+        content:'';
+        display: table;
+        width: 0;
+        height: 0;
+        visibility: hidden;
+        clear: both;
+    }
+}
+

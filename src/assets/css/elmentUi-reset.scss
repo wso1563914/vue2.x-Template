@@ -1,0 +1,110 @@
+@import './mixin.scss';
+// 基础样式调整
+// Pagination 分页
+.el-popper{
+    margin-top: 0px !important;
+}
+.el-pagination {
+    .el-pager {
+        & > li {
+            border: 1px solid #d7dde4;
+            border-radius: 2px;
+        }
+    }
+}
+// tabs
+.el-tabs--card {
+    &.el-tabs--top {
+        .el-tabs__header {
+            border-bottom: 0;
+        }
+        .el-tabs__item {
+            height: 32px;
+            line-height: 32px;
+        }
+        .el-tabs__nav {
+            border: 0;
+            .el-tabs__item {
+                background: #f5f7f9;
+                border-radius: 2px;
+                border: 1px solid #f5f7f9;
+                color: #61677a;
+                &.is-active {
+                    background: #ffffff;
+                    border: 1px solid $default-color;
+                    border-radius: 2px;
+                    color: $default-color;
+                }
+            }
+        }
+    }
+}
+
+// 面包屑
+.el-breadcrumb {
+    border-bottom: 0 !important;
+    padding-left: 0 !important;
+    height: auto !important;
+    .el-breadcrumb__item {
+        line-height: inherit !important;
+    }
+}
+// Dropdown 下拉菜单
+.el-dropdown-menu {
+    .el-dropdown-menu__item {
+        &:not(.is-disabled) {
+            &:hover {
+                background-color: #f5f7f9;
+            }
+        }
+    }
+}
+
+// steps步骤条
+.el-steps {
+    &.el-steps--horizontal {
+        .el-step__head {
+            .el-step__line {
+                top: 22px;
+                height: 1px;
+                background: #f5f7f9;
+            }
+            .el-step__icon {
+                width: 36px;
+                height: 36px;
+                border: 1px solid #d7dde4;
+                .el-step__icon-inner {
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    background: #d7dde4;
+                    border-radius: 50%;
+                    font-size: 20px;
+                    color: #ffffff;
+                }
+            }
+            &.is-process {
+                .el-step__icon {
+                    border-color: $default-color;
+                    .el-step__icon-inner {
+                        background: $default-color;
+                    }
+                }
+            }
+            &.is-success {
+                .el-step__icon {
+                    border-color: $positive-color;
+                    .el-step__icon-inner {
+                        background: $positive-color;
+                        &.is-status {
+                            transform: translateY(0px);
+                        }
+                    }
+                }
+                .el-step__title.is-success {
+                    color: #9ea7b4;
+                }
+            }
+        }
+    }
+}

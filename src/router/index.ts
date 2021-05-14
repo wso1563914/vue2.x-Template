@@ -1,16 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import routeList from './routeModule';
 
 Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
-        {
-            path: '/',
-            name: 'Home',
-            component: Home,
-        },
-    ],
+const routes: Array<RouteConfig> = routeList,
     router = new VueRouter({
         routes,
     });
