@@ -31,6 +31,7 @@
     interface TopMenuItem {
         path: string;
         name: string;
+        children: any[];
         [key: string]: any;
     }
     @Component

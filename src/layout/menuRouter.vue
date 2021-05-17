@@ -19,7 +19,7 @@
             ></UserDropdown>
         </TopMenu>
         <main>
-            <nav></nav>
+            <SidebarMenu :menuList="sidebarMenuList" v-if="isShowSidebarMenu" @click="handleSidebarClick"> </SidebarMenu>
             <div class="main-container">
                 <router-view></router-view>
             </div>
@@ -47,12 +47,15 @@
         };
         topActiveMenu = 'home';
         commandList: any[] = [];
+        sidebarMenuList: any[] = [];
+        isShowSidebarMenu = false;
         created(): void {
             this.menuArr = menuList.data.map(item => {
                 if (item.parentId == -1) {
                     return {
                         path: item.path,
-                        name: item.label,
+                        name: item.title,
+                        children: item.children,
                     };
                 }
             });
@@ -68,13 +71,22 @@
 
         topMenuClick(obj: any): void {
             const { path, menuItem } = obj;
-            console.log(path, menuItem);
             this.topActiveMenu = path;
+            if (menuItem && menuItem.children.length > 0) {
+                this.sidebarMenuList = menuItem.children;
+                this.isShowSidebarMenu = true;
+            } else {
+                this.isShowSidebarMenu = false;
+                this.sidebarMenuList = [];
+            }
         }
         commandClick(command: string): void {
             if (command === 'linkUs') {
                 console.log(111);
             }
+        }
+        handleSidebarClick(args) {
+            console.log(args);
         }
     }
 </script>
@@ -90,10 +102,6 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            nav {
-                width: 300px;
-                background: #9f9;
-            }
             .main-container {
                 flex: 1;
             }
