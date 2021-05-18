@@ -5,6 +5,26 @@
     + 中间menuList
     + 右边其他按钮和用户名
 
+## demo
+```
+    <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @menuClick="topMenuClick">
+        <svg class="logo-icon" slot="logo">
+            <use xlink:href="#iconjuhelogo2x"></use>
+        </svg>
+        <span style="height: 100%" slot="otherIcon">
+            <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
+                <use xlink:href="#iconsousuo2x"></use>
+            </svg>
+        </span>
+        <UserDropdown
+            slot="otherIcon"
+            :userInfo="userInfo"
+            userInfoIcon="iconguanliyuan2x"
+            :commandList="commandList"
+            @click="commandClick"
+        ></UserDropdown>
+    </TopMenu>
+```
 ## logo
 logo可以传:logo="图片地址"， 或者用slot="logo"自己上传
 
@@ -31,3 +51,41 @@ TopMenuItem {
 
 通过slot去添加按钮
 `<button slot="otherIcon">按钮</button>`
+
+## drapdown组件
+```
+    <UserDropdown
+        slot="otherIcon"
+        :userInfo="userInfo"
+        userInfoIcon="iconguanliyuan2x"
+        :commandList="commandList"
+        @click="commandClick"
+    ></UserDropdown>
+```
+
+### props
+    // 抽屉选项列表
+    commandList: [
+        {
+            name: '联系我们',
+            icon: 'iconlianxi2x',
+            command: 'linkUs',
+        },
+    ];
+
+    // 用户信息
+    userInfo: {
+        realname: '张三',
+        phone: '1234566344',
+    };
+
+### method
+click: 指令点击事件
+
+userInfoIcon: 用户名字旁边的icon 暂时为iconfont
+
+commandClick(command: string): void {
+    if (command === 'linkUs') {
+        console.log(111);
+    }
+}

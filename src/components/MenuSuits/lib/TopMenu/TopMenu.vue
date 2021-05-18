@@ -26,68 +26,82 @@
     </div>
 </template>
 
-<script lang="ts">
-    import { Component, Vue, Prop } from 'vue-property-decorator';
-    interface TopMenuItem {
-        path: string;
-        name: string;
-        children: any[];
-        [key: string]: any;
-    }
-    @Component
-    export default class TopMenu extends Vue {
-        @Prop({ type: String }) logo!: string; // logo 图片的路径
-        @Prop({ type: Array }) topMenuList!: TopMenuItem[];
-        @Prop({ type: String, default: '' }) actived!: string; // 当前选择的菜单的path
+<script>
+    // interface TopMenuItem {
+    //     path: string;
+    //     name: string;
+    //     children: any[];
+    //     [key: string]: any;
+    // }
+    export default {
+        data() {
+            return {
+                currentMenuPath: '',
+            };
+        },
+        props: {
+            logo: {
+                // 外面require()的logo图片对象, 可选
+                type: String || Object,
+            },
+            topMenuList: {
+                type: Array, // TopMenuItem[];
+                default: () => [],
+            },
+            actived: {
+                // 当前选择的菜单的path
+                type: String,
+                default: '',
+            },
+        },
 
-        currentMenuPath = '';
-
-        created(): void {
+        created() {
             this.currentMenuPath = this.actived;
-        }
-
-        logoClick(): void {
-            this.$emit('logoClick');
-        }
-        // 一级导航点击
-        firstRouteClick(path: string, menuItem: TopMenuItem): void {
-            this.currentMenuPath = path;
-            this.$emit('menuClick', { path, menuItem });
-        }
-    }
+        },
+        methods: {
+            logoClick() {
+                this.$emit('logoClick');
+            },
+            // 一级导航点击
+            firstRouteClick(path, menuItem) {
+                this.currentMenuPath = path;
+                this.$emit('menuClick', { path, menuItem });
+            },
+        },
+    };
 </script>
 
 <style lang="scss">
     .main-top-menu {
         display: flex;
+        width: 100%;
         height: 56px;
         background: #131e27;
         color: #fff;
         .logo-box {
-            min-width: 200px;
             height: 100%;
             display: flex;
             align-items: center;
             cursor: pointer;
+            margin-right: 30px;
             img {
                 width: 200px;
-                height: 200px;
             }
         }
 
         .menu-box {
             flex: 1;
-            display: flex;
+            // display: flex;
             min-width: 500px;
-            max-width: 900px;
-            margin: 0 100px;
+            // max-width: 900px;
+            // margin: 0 100px;
             ul {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 li {
-                    flex: 1;
+                    padding: 0 20px;
                     font-size: 16px;
                     line-height: 50px;
                     height: 50px;
@@ -102,6 +116,7 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        font-weight: 700;
 
                         span {
                             line-height: 50px;
@@ -111,11 +126,13 @@
             }
         }
         .info-box {
+            min-width: 200px;
             height: 100%;
             padding: 0 24px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-left: auto;
             .o-icon {
                 margin-right: 32px;
             }

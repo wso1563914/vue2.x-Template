@@ -125,26 +125,31 @@
                 .el-submenu__title {
                     .menuicon {
                         color: var(--elmenu-active-text-color);
-                        margin-right: 8px;
                     }
                     & > span {
                         color: var(--elmenu-active-text-color);
                     }
                 }
             }
+            .el-submenu__title:hover {
+                background: var(--elmenu-background);
+            }
             .menuicon {
                 font-size: 16px;
+                margin-right: 8px;
             }
             .el-menu {
                 .el-menu-item {
-                    height: 40px;
-                    line-height: 40px;
                     padding-left: 48px !important;
+
                     &:hover {
                         background: var(--elmenu-background);
                     }
                     &.is-active {
                         background: var(--elmenu-background);
+                    }
+                    span {
+                        font-weight: 700;
                     }
                 }
             }
@@ -155,6 +160,12 @@
                     padding-left: 16px !important;
                     padding-right: 16px;
                 }
+            }
+
+            .el-menu-item,
+            .el-submenu__title {
+                height: 40px;
+                line-height: 40px;
             }
         }
 

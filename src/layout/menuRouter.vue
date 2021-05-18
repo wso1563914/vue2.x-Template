@@ -1,10 +1,25 @@
 <template>
     <!-- 带有顶部和侧边菜单的Router -->
     <div class="gem-container">
-        <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @menuClick="topMenuClick">
-            <svg class="logo-icon" slot="logo">
+        <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @menuClick="topMenuClick" :logo="img">
+            <!-- <svg class="logo-icon" slot="logo">
                 <use xlink:href="#iconjuhelogo2x"></use>
-            </svg>
+            </svg> -->
+            <span style="height: 100%" slot="otherIcon">
+                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
+                    <use xlink:href="#iconsousuo2x"></use>
+                </svg>
+            </span>
+            <span style="height: 100%" slot="otherIcon">
+                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
+                    <use xlink:href="#iconsousuo2x"></use>
+                </svg>
+            </span>
+            <span style="height: 100%" slot="otherIcon">
+                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
+                    <use xlink:href="#iconsousuo2x"></use>
+                </svg>
+            </span>
             <span style="height: 100%" slot="otherIcon">
                 <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
                     <use xlink:href="#iconsousuo2x"></use>
@@ -19,7 +34,14 @@
             ></UserDropdown>
         </TopMenu>
         <main>
-            <SidebarMenu :menuList="sidebarMenuList" v-if="isShowSidebarMenu" @click="handleSidebarClick"> </SidebarMenu>
+            <SidebarMenu
+                :menuList="sidebarMenuList"
+                active-text-color="#26bee6"
+                active-bg="rgba(40, 230, 40, 0.1)"
+                v-if="isShowSidebarMenu"
+                @click="handleSidebarClick"
+            >
+            </SidebarMenu>
             <div class="main-container">
                 <router-view></router-view>
             </div>
@@ -29,6 +51,7 @@
 
 <script lang="ts">
     import { TopMenu, SidebarMenu, UserDropdown } from '@/components/MenuSuits';
+    // import { TopMenu, SidebarMenu, UserDropdown } from 'publib/MenuSuits';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
@@ -49,6 +72,9 @@
         commandList: any[] = [];
         sidebarMenuList: any[] = [];
         isShowSidebarMenu = false;
+
+        img: any = require('../assets/images/logo.png');
+
         created(): void {
             this.menuArr = menuList.data.map(item => {
                 if (item.parentId == -1) {
