@@ -1,16 +1,17 @@
 <template>
-    <nav class="sidebar-menu">
+    <nav class="sidebar-menu" :style="menuCssVar">
         <el-menu
             :default-active="defaultMenu"
             class="el-sidebar-menu"
             :collapse="isCollapse"
             :router="false"
-            active-text-color="#26BEE6"
+            :active-text-color="activeTextColor"
             text-color="#61677A"
             @select="handleSelect"
         >
             <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
                 <template slot="title">
+                    <!-- 图片是iconfont的图片,UI出图，后台配置 -->
                     <i :class="['menuicon', 'iconfont', item.icon]"></i>
                     <span slot="title">{{ item.title }}</span>
                 </template>
@@ -44,6 +45,15 @@
                 isCollapse: false,
             };
         },
+        computed: {
+            // 设置css变量
+            menuCssVar() {
+                return {
+                    '--elmenu-background': this.activeBg,
+                    '--elmenu-active-text-color': this.activeTextColor,
+                };
+            },
+        },
         props: {
             defaultActiveMenu: {
                 // 默认激活的菜单
@@ -54,27 +64,42 @@
                 type: Array,
                 default: () => [],
             },
+            activeTextColor: String,
+            activeBg: String,
         },
         created() {
             this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
+
+            this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
         },
         methods: {
             handleSelect(index, indexPath) {
-                let citem = null;
-                // this.sidebarActive = index;
-                this.menuList.forEach(item => {
-                    if (indexPath[0] === item.path && item.children.length > 0) {
-                        citem = item.children.filter(ele => {
-                            if (index === ele.path) {
-                                return true;
-                            }
-                        })[0];
-                    }
-                });
+                let citem = this.getCurrentMenuItem(index);
+
+                // 输出的menuItem
+                // interface outMenuItem {
+                //     path: string; // 当前三级menu的path
+                //     parentPath: string; // 当前二级的的path
+                //     menuItem: menuItem; // 当前三级menu的menuItem
+                // }
                 this.$emit('click', { path: index, parentPath: indexPath[0], menuItem: citem });
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
+            },
+
+            getCurrentMenuItem(path) {
+                let m = null;
+                this.menuList.forEach(item => {
+                    if (item.children && item.children.length > 0) {
+                        item.children.forEach(ele => {
+                            if (ele.path === path) {
+                                m = ele;
+                            }
+                        });
+                    }
+                });
+                return m;
             },
         },
     };
@@ -91,7 +116,7 @@
         box-shadow: 2px 0 6px 0 rgba(6, 25, 41, 0.07);
         .el-sidebar-menu {
             position: relative;
-            width: 200px;
+            width: 210px;
             height: 100%;
             overflow: auto;
             border-right: 0;
@@ -99,11 +124,11 @@
                 // 配置文字颜色
                 .el-submenu__title {
                     .menuicon {
-                        color: #26bee6;
+                        color: var(--elmenu-active-text-color);
                         margin-right: 8px;
                     }
                     & > span {
-                        color: #26bee6;
+                        color: var(--elmenu-active-text-color);
                     }
                 }
             }
@@ -116,10 +141,10 @@
                     line-height: 40px;
                     padding-left: 48px !important;
                     &:hover {
-                        background: rgba(40, 189, 230, 0.1);
+                        background: var(--elmenu-background);
                     }
                     &.is-active {
-                        background: rgba(40, 189, 230, 0.1);
+                        background: var(--elmenu-background);
                     }
                 }
             }
