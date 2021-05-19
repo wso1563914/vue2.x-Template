@@ -34,6 +34,10 @@
     //     [key: string]: any;
     // }
     export default {
+        model: {
+            props: 'actived',
+            event: 'on-active-change',
+        },
         data() {
             return {
                 currentMenuPath: '',
@@ -65,7 +69,8 @@
             // 一级导航点击
             firstRouteClick(path, menuItem) {
                 this.currentMenuPath = path;
-                this.$emit('menuClick', { path, menuItem });
+                this.$emit('on-active-change', path);
+                this.$emit('on-menu-click', { path, menuItem });
             },
         },
     };

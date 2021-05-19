@@ -1,7 +1,7 @@
 <template>
     <!-- 带有顶部和侧边菜单的Router -->
     <div class="gem-container">
-        <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @menuClick="topMenuClick" :logo="img">
+        <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
             <!-- <svg class="logo-icon" slot="logo">
                 <use xlink:href="#iconjuhelogo2x"></use>
             </svg> -->
@@ -96,8 +96,8 @@
         }
 
         topMenuClick(obj: any): void {
-            const { path, menuItem } = obj;
-            this.topActiveMenu = path;
+            const { menuItem } = obj;
+            // this.topActiveMenu = path;
             if (menuItem && menuItem.children.length > 0) {
                 this.sidebarMenuList = menuItem.children;
                 this.isShowSidebarMenu = true;
