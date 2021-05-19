@@ -1,25 +1,63 @@
 <template>
     <nav class="sidebar-menu" :style="menuCssVar">
-        <el-menu
-            :default-active="defaultMenu"
-            class="gem-sidebar-menu"
-            :collapse="isCollapse"
-            :router="false"
-            :active-text-color="activeTextColor"
-            text-color="#61677A"
-            @select="handleSelect"
-        >
-            <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
+        <!-- <Menu :active-name="defaultMenu" :open-names="openName" class="gem-sidebar-menu" @onSelect="handleSelect" :width="menuWidth">
+            <Submenu v-for="(item, i) in menuList" :key="i" :name="item.path">
                 <template slot="title">
-                    <!-- 图片是iconfont的图片,UI出图，后台配置 -->
                     <i :class="['menuicon', 'iconfont', item.icon]"></i>
                     <span slot="title">{{ item.title }}</span>
                 </template>
-                <el-menu-item v-for="(el, j) in item.children" :key="j" :index="el.path">
-                    <span slot="title">{{ el.title }}</span>
-                </el-menu-item>
-            </el-submenu>
-        </el-menu>
+                <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.path">
+                    <span>{{ el.title }}</span>
+                </MenuItem>
+            </Submenu>
+        </Menu> -->
+
+        <Menu :active-name="defaultMenu" :open-names="openName" width="auto" class="gem-sidebar-menu" accordion>
+            <template v-for="(item, componentIndex) in menuList">
+                <!-- 展开并且有子菜单 -->
+                <Submenu v-if="!isCollapse && item.children.length" v-bind:key="componentIndex" :name="componentIndex">
+                    <template slot="title">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </template>
+                    <MenuItem v-for="(children, index) in item.children" :key="index" :name="children.to" :to="children.to">
+                        {{ children.name }}
+                    </MenuItem>
+                </Submenu>
+
+                <!-- 展开但没有子菜单 -->
+                <MenuItem v-else-if="!isCollapse" :name="item.to" :to="item.to" v-bind:key="componentIndex">
+                    <Icon :type="item.icon" />
+                    <span>{{ item.name }}</span>
+                </MenuItem>
+
+                <!-- 不展开有子菜单 -->
+                <Dropdown
+                    v-else-if="isCollapse && item.children.length"
+                    v-bind:key="componentIndex"
+                    placement="right-start"
+                    class="menu-dropdown"
+                >
+                    <MenuItem :name="item.to" :to="item.to">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </MenuItem>
+                    <DropdownMenu slot="list">
+                        <DropdownItem v-for="(children, index) in item.children" :key="index">
+                            <MenuItem :name="children.to" :to="children.to">{{ children.name }}</MenuItem>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+                <!-- 不展开无子菜单 -->
+                <Tooltip v-else-if="isCollapse" :content="item.name" placement="right" v-bind:key="componentIndex">
+                    <MenuItem :name="item.to" :to="item.to">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </MenuItem>
+                </Tooltip>
+            </template>
+        </Menu>
         <div class="menu-collapse">
             <span class="mc-icon" @click="hadleCollapse">
                 <img src="./icon/collapse.png" v-if="!isCollapse" />
@@ -43,6 +81,8 @@
             return {
                 defaultMenu: '',
                 isCollapse: false,
+                menuWidth: '210px',
+                openName: [],
             };
         },
         computed: {
@@ -68,12 +108,17 @@
             activeBg: String,
         },
         created() {
-            this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
-
-            this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+            this.initMenu();
         },
         methods: {
+            initMenu() {
+                this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
+                this.openName = [this.menuList[0].path];
+
+                this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+            },
             handleSelect(index, indexPath) {
+                console.log(index);
                 let citem = this.getCurrentMenuItem(index);
 
                 // 输出的menuItem
@@ -86,6 +131,7 @@
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
+                this.menuWidth = this.isCollapse ? '64px' : '210px';
             },
 
             getCurrentMenuItem(path) {
@@ -102,6 +148,9 @@
                 return m;
             },
         },
+        // updated() {
+        //     this.initMenu();
+        // },
     };
 </script>
 
@@ -120,6 +169,7 @@
             height: 100%;
             overflow: auto;
             border-right: 0;
+            color: #61677a;
             .el-submenu.is-active {
                 // 配置文字颜色
                 .el-submenu__title {

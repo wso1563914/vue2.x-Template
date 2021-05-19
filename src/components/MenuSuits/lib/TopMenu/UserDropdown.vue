@@ -58,17 +58,17 @@
             .dr-photo {
                 padding: 11px 12px;
                 margin-bottom: 12px;
-                color: $primary-text;
+                color: #222222;
                 // border-bottom: 1px solid #F5F5F5;
             }
             .dr-normal {
-                color: $primary-text;
+                color: #222222;
                 margin-bottom: 12px;
             }
             .dr-out {
                 padding: 11px 12px;
                 border-top: 1px solid #f5f5f5;
-                color: $primary-text;
+                color: #222222;
             }
         }
     }

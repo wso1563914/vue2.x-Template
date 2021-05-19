@@ -42,6 +42,15 @@
                 @click="handleSidebarClick"
             >
             </SidebarMenu>
+            <!-- <ISidebarMenu
+                :menuList="sidebarMenuList"
+                active-text-color="#26bee6"
+                active-bg="rgba(40, 230, 40, 0.1)"
+                v-if="isShowSidebarMenu"
+                @click="handleSidebarClick"
+            >
+            </ISidebarMenu> -->
+
             <div class="main-container">
                 <router-view></router-view>
             </div>
@@ -50,8 +59,8 @@
 </template>
 
 <script lang="ts">
+    // import { TopMenu, ISidebarMenu, UserDropdown } from '@/components/MenuSuits';
     import { TopMenu, SidebarMenu, UserDropdown } from '@/components/MenuSuits';
-    // import { TopMenu, SidebarMenu, UserDropdown } from 'publib/MenuSuits';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
@@ -59,6 +68,7 @@
         components: {
             TopMenu,
             SidebarMenu,
+            // ISidebarMenu,
             UserDropdown,
         },
     })
