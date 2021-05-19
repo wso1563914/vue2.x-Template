@@ -83,7 +83,8 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            margin-right: 30px;
+            margin-right: 50px;
+            margin-left: 20px;
             img {
                 width: 200px;
             }

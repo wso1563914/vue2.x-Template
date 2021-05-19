@@ -1,9 +1,8 @@
 <template>
     <nav class="sidebar-menu" :style="menuCssVar">
-        <Menu :active-name="defaultMenu" :open-names="openName" class="gem-sidebar-menu" @onSelect="handleSelect" :width="menuWidth">
+        <!-- <Menu :active-name="defaultMenu" :open-names="openName" class="gem-sidebar-menu" @onSelect="handleSelect" :width="menuWidth">
             <Submenu v-for="(item, i) in menuList" :key="i" :name="item.path">
                 <template slot="title">
-                    <!-- 图片是iconfont的图片,UI出图，后台配置 -->
                     <i :class="['menuicon', 'iconfont', item.icon]"></i>
                     <span slot="title">{{ item.title }}</span>
                 </template>
@@ -11,6 +10,53 @@
                     <span>{{ el.title }}</span>
                 </MenuItem>
             </Submenu>
+        </Menu> -->
+
+        <Menu :active-name="defaultMenu" :open-names="openName" width="auto" class="gem-sidebar-menu" accordion>
+            <template v-for="(item, componentIndex) in menuList">
+                <!-- 展开并且有子菜单 -->
+                <Submenu v-if="!isCollapse && item.children.length" v-bind:key="componentIndex" :name="componentIndex">
+                    <template slot="title">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </template>
+                    <MenuItem v-for="(children, index) in item.children" :key="index" :name="children.to" :to="children.to">
+                        {{ children.name }}
+                    </MenuItem>
+                </Submenu>
+
+                <!-- 展开但没有子菜单 -->
+                <MenuItem v-else-if="!isCollapse" :name="item.to" :to="item.to" v-bind:key="componentIndex">
+                    <Icon :type="item.icon" />
+                    <span>{{ item.name }}</span>
+                </MenuItem>
+
+                <!-- 不展开有子菜单 -->
+                <Dropdown
+                    v-else-if="isCollapse && item.children.length"
+                    v-bind:key="componentIndex"
+                    placement="right-start"
+                    class="menu-dropdown"
+                >
+                    <MenuItem :name="item.to" :to="item.to">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </MenuItem>
+                    <DropdownMenu slot="list">
+                        <DropdownItem v-for="(children, index) in item.children" :key="index">
+                            <MenuItem :name="children.to" :to="children.to">{{ children.name }}</MenuItem>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+                <!-- 不展开无子菜单 -->
+                <Tooltip v-else-if="isCollapse" :content="item.name" placement="right" v-bind:key="componentIndex">
+                    <MenuItem :name="item.to" :to="item.to">
+                        <Icon :type="item.icon" />
+                        <span>{{ item.name }}</span>
+                    </MenuItem>
+                </Tooltip>
+            </template>
         </Menu>
         <div class="menu-collapse">
             <span class="mc-icon" @click="hadleCollapse">
