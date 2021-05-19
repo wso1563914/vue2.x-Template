@@ -7,7 +7,7 @@
 
 ## demo
 ```
-    <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @menuClick="topMenuClick">
+    <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick">
         <svg class="logo-icon" slot="logo">
             <use xlink:href="#iconjuhelogo2x"></use>
         </svg>
