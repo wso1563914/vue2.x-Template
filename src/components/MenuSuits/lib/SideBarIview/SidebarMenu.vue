@@ -1,25 +1,17 @@
 <template>
     <nav class="sidebar-menu" :style="menuCssVar">
-        <el-menu
-            :default-active="defaultMenu"
-            class="gem-sidebar-menu"
-            :collapse="isCollapse"
-            :router="false"
-            :active-text-color="activeTextColor"
-            text-color="#61677A"
-            @select="handleSelect"
-        >
-            <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
+        <Menu :active-name="defaultMenu" :open-names="openName" class="gem-sidebar-menu" @onSelect="handleSelect" :width="menuWidth">
+            <Submenu v-for="(item, i) in menuList" :key="i" :name="item.path">
                 <template slot="title">
                     <!-- 图片是iconfont的图片,UI出图，后台配置 -->
                     <i :class="['menuicon', 'iconfont', item.icon]"></i>
                     <span slot="title">{{ item.title }}</span>
                 </template>
-                <el-menu-item v-for="(el, j) in item.children" :key="j" :index="el.path">
-                    <span slot="title">{{ el.title }}</span>
-                </el-menu-item>
-            </el-submenu>
-        </el-menu>
+                <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.path">
+                    <span>{{ el.title }}</span>
+                </MenuItem>
+            </Submenu>
+        </Menu>
         <div class="menu-collapse">
             <span class="mc-icon" @click="hadleCollapse">
                 <img src="./icon/collapse.png" v-if="!isCollapse" />
@@ -43,6 +35,8 @@
             return {
                 defaultMenu: '',
                 isCollapse: false,
+                menuWidth: '210px',
+                openName: [],
             };
         },
         computed: {
@@ -68,12 +62,17 @@
             activeBg: String,
         },
         created() {
-            this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
-
-            this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+            this.initMenu();
         },
         methods: {
+            initMenu() {
+                this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
+                this.openName = [this.menuList[0].path];
+
+                this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+            },
             handleSelect(index, indexPath) {
+                console.log(index);
                 let citem = this.getCurrentMenuItem(index);
 
                 // 输出的menuItem
@@ -86,6 +85,7 @@
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
+                this.menuWidth = this.isCollapse ? '64px' : '210px';
             },
 
             getCurrentMenuItem(path) {
@@ -102,6 +102,9 @@
                 return m;
             },
         },
+        // updated() {
+        //     this.initMenu();
+        // },
     };
 </script>
 
@@ -120,6 +123,7 @@
             height: 100%;
             overflow: auto;
             border-right: 0;
+            color: #61677a;
             .el-submenu.is-active {
                 // 配置文字颜色
                 .el-submenu__title {
