@@ -12,7 +12,8 @@
             <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
                 <template slot="title">
                     <!-- 图片是iconfont的图片,UI出图，后台配置 -->
-                    <i :class="['menuicon', 'iconfont', item.icon]"></i>
+                    <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
+                    <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <el-menu-item v-for="(el, j) in item.children" :key="j" :index="el.path">
@@ -43,6 +44,7 @@
             return {
                 defaultMenu: '',
                 isCollapse: false,
+                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
             };
         },
         computed: {
