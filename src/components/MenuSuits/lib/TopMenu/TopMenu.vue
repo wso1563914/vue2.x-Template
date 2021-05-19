@@ -122,10 +122,10 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        font-weight: 700;
 
                         span {
                             line-height: 50px;
+                            font-weight: 700;
                         }
                     }
                 }

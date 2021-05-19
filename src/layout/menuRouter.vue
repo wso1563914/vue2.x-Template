@@ -10,28 +10,7 @@
                     <use xlink:href="#iconsousuo2x"></use>
                 </svg>
             </span>
-            <span style="height: 100%" slot="otherIcon">
-                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
-                    <use xlink:href="#iconsousuo2x"></use>
-                </svg>
-            </span>
-            <span style="height: 100%" slot="otherIcon">
-                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
-                    <use xlink:href="#iconsousuo2x"></use>
-                </svg>
-            </span>
-            <span style="height: 100%" slot="otherIcon">
-                <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
-                    <use xlink:href="#iconsousuo2x"></use>
-                </svg>
-            </span>
-            <UserDropdown
-                slot="otherIcon"
-                :userInfo="userInfo"
-                userInfoIcon="iconguanliyuan2x"
-                :commandList="commandList"
-                @click="commandClick"
-            ></UserDropdown>
+            <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
         </TopMenu>
         <main>
             <SidebarMenu
@@ -75,8 +54,9 @@
     export default class MenuRouter extends Vue {
         menuArr: any[] = [];
         userInfo: any = {
-            realname: '张三',
+            name: '张三',
             phone: '1234566344',
+            img: '',
         };
         topActiveMenu = 'home';
         commandList: any[] = [];
