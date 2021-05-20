@@ -1,7 +1,7 @@
 <template>
     <div class="main-top-menu">
         <div class="logo-box" @click="logoClick">
-            <img :src="logo" alt="" v-if="logo" />
+            <img :src="logo" :alt="alt" v-if="logo" />
             <!-- svg需要用slot -->
             <template v-else>
                 <slot name="logo"></slot>
@@ -47,6 +47,10 @@
             logo: {
                 // 外面require()的logo图片对象, 可选
                 type: String || Object,
+            },
+            alt: {
+                type: String,
+                default: '',
             },
             topMenuList: {
                 type: Array, // TopMenuItem[];
