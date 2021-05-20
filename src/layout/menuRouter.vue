@@ -14,6 +14,7 @@
         </TopMenu>
         <main>
             <SidebarMenu
+                v-model="sidebarMenuPath"
                 :menuList="sidebarMenuList"
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
@@ -38,8 +39,7 @@
 </template>
 
 <script lang="ts">
-    // import { TopMenu, ISidebarMenu, UserDropdown } from '@/components/MenuSuits';
-    import { TopMenu, SidebarMenu, UserDropdown } from '@/components/MenuSuits';
+    import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
@@ -47,7 +47,7 @@
         components: {
             TopMenu,
             SidebarMenu,
-            // ISidebarMenu,
+            ISidebarMenu,
             UserDropdown,
         },
     })
@@ -64,6 +64,8 @@
         isShowSidebarMenu = false;
 
         img: any = require('../assets/images/logo.png');
+
+        sidebarMenuPath = '';
 
         created(): void {
             this.menuArr = menuList.data.map(item => {
