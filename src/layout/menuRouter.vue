@@ -13,23 +13,20 @@
             <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
         </TopMenu>
         <main>
-            <SidebarMenu
-                v-model="sidebarMenuPath"
+            <!-- <SidebarMenu
                 :menuList="sidebarMenuList"
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
                 v-if="isShowSidebarMenu"
-                @click="handleSidebarClick"
             >
-            </SidebarMenu>
-            <!-- <ISidebarMenu
+            </SidebarMenu> -->
+            <ISidebarMenu
                 :menuList="sidebarMenuList"
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
                 v-if="isShowSidebarMenu"
-                @click="handleSidebarClick"
             >
-            </ISidebarMenu> -->
+            </ISidebarMenu>
 
             <div class="main-container">
                 <router-view></router-view>
@@ -64,8 +61,6 @@
         isShowSidebarMenu = false;
 
         img: any = require('../assets/images/logo.png');
-
-        sidebarMenuPath = '';
 
         created(): void {
             this.menuArr = menuList.data.map(item => {
@@ -102,9 +97,6 @@
             if (command === 'linkUs') {
                 console.log(111);
             }
-        }
-        handleSidebarClick(args) {
-            console.log(args);
         }
     }
 </script>

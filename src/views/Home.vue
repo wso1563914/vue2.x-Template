@@ -13,6 +13,8 @@
     export default class Home extends Vue {
         value = [20, 50];
 
-        show(): void {}
+        show(): void {
+            this.$router.push({ name: 'personnelTrack' });
+        }
     }
 </script>

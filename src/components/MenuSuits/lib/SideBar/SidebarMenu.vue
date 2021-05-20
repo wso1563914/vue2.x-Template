@@ -3,11 +3,13 @@
         <el-menu
             :default-active="defaultMenu"
             class="gem-sidebar-menu"
+            ref="sidebarMenuRef"
             :collapse="isCollapse"
             :router="false"
             :active-text-color="activeTextColor"
             text-color="#61677A"
             @select="handleSelect"
+            unique-opened
         >
             <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
                 <template slot="title">
@@ -21,12 +23,13 @@
                 </el-menu-item>
             </el-submenu>
         </el-menu>
-        <div class="menu-collapse">
+        <!-- 收缩 -->
+        <!-- <div class="menu-collapse">
             <span class="mc-icon" @click="hadleCollapse">
                 <img src="./icon/collapse.png" v-if="!isCollapse" />
                 <img src="./icon/expand.png" v-else />
             </span>
-        </div>
+        </div> -->
     </nav>
 </template>
 
@@ -69,39 +72,68 @@
             activeTextColor: String,
             activeBg: String,
         },
+        watch: {
+            menuList(newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    this.initMenu();
+                }
+            },
+            $route(val) {
+                this.defaultMenu = val.path.substr(1);
+            },
+        },
         created() {
-            this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
-
-            this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+            this.initMenu();
         },
         methods: {
-            handleSelect(index, indexPath) {
-                let citem = this.getCurrentMenuItem(index);
+            initMenu() {
+                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path,
+                    { parentPath, menuItem } = this.getCurrentMenuItem(path);
+                this.routerChange(path);
+                this.$emit('click', { path: path, parentPath, menuItem });
+            },
+            handleSelect(path) {
+                if (path === this.$route.path.substr(1)) {
+                    return;
+                }
+                let { parentPath, menuItem } = this.getCurrentMenuItem(path);
+                this.$router.push(path);
 
                 // 输出的menuItem
-                // interface outMenuItem {
+                // interface menuItem {
                 //     path: string; // 当前三级menu的path
                 //     parentPath: string; // 当前二级的的path
                 //     menuItem: menuItem; // 当前三级menu的menuItem
                 // }
-                this.$emit('click', { path: index, parentPath: indexPath[0], menuItem: citem });
+                this.$emit('click', { path, parentPath, menuItem });
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
 
             getCurrentMenuItem(path) {
-                let m = null;
+                let m = null,
+                    p = '';
                 this.menuList.forEach(item => {
                     if (item.children && item.children.length > 0) {
                         item.children.forEach(ele => {
                             if (ele.path === path) {
+                                p = item.path;
                                 m = ele;
                             }
                         });
                     }
                 });
-                return m;
+                return { parentPath: p, menuItem: m };
+            },
+
+            routerChange(path, cb) {
+                if (path !== this.$route.path.substr(1)) {
+                    this.$router.push(path);
+                    if (cb && typeof cb === 'function') {
+                        cb();
+                    }
+                }
             },
         },
     };

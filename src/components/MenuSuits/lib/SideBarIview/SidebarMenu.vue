@@ -1,69 +1,32 @@
 <template>
     <nav class="sidebar-menu" :style="menuCssVar">
-        <!-- <Menu :active-name="defaultMenu" :open-names="openName" class="gem-sidebar-menu" @onSelect="handleSelect" :width="menuWidth">
+        <Menu
+            ref="menuRef"
+            :active-name="defaultMenu"
+            :open-names="openName"
+            class="gem-sidebar-menu"
+            @on-select="handleSelect"
+            width="210px"
+            accordion
+        >
             <Submenu v-for="(item, i) in menuList" :key="i" :name="item.path">
                 <template slot="title">
-                    <i :class="['menuicon', 'iconfont', item.icon]"></i>
+                    <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
+                    <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.path">
                     <span>{{ el.title }}</span>
                 </MenuItem>
             </Submenu>
-        </Menu> -->
-
-        <Menu :active-name="defaultMenu" :open-names="openName" width="auto" class="gem-sidebar-menu" accordion>
-            <template v-for="(item, componentIndex) in menuList">
-                <!-- 展开并且有子菜单 -->
-                <Submenu v-if="!isCollapse && item.children.length" v-bind:key="componentIndex" :name="componentIndex">
-                    <template slot="title">
-                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
-                        <span>{{ item.name }}</span>
-                    </template>
-                    <MenuItem v-for="(children, index) in item.children" :key="index" :name="children.path" :to="children.path">
-                        {{ children.name }}
-                    </MenuItem>
-                </Submenu>
-
-                <!-- 展开但没有子菜单 -->
-                <MenuItem v-else-if="!isCollapse" :name="item.path" :to="item.path" v-bind:key="componentIndex">
-                    <i :class="['menuicon', 'iconfont', item.icon]"></i>
-                    <span>{{ item.name }}</span>
-                </MenuItem>
-
-                <!-- 不展开有子菜单 -->
-                <Dropdown
-                    v-else-if="isCollapse && item.children.length"
-                    v-bind:key="componentIndex"
-                    placement="right-start"
-                    class="menu-dropdown"
-                >
-                    <MenuItem :name="item.path" :to="item.path">
-                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
-                        <span>{{ item.name }}</span>
-                    </MenuItem>
-                    <DropdownMenu slot="list">
-                        <DropdownItem v-for="(children, index) in item.children" :key="index">
-                            <MenuItem :name="children.to" :to="children.to">{{ children.name }}</MenuItem>
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-
-                <!-- 不展开无子菜单 -->
-                <Tooltip v-else-if="isCollapse" :content="item.name" placement="right" v-bind:key="componentIndex">
-                    <MenuItem :name="item.path" :to="item.path">
-                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
-                        <span>{{ item.name }}</span>
-                    </MenuItem>
-                </Tooltip>
-            </template>
         </Menu>
-        <div class="menu-collapse">
+        <!-- 收缩 -->
+        <!-- <div class="menu-collapse">
             <span class="mc-icon" @click="hadleCollapse">
                 <img src="./icon/collapse.png" v-if="!isCollapse" />
                 <img src="./icon/expand.png" v-else />
             </span>
-        </div>
+        </div> -->
     </nav>
 </template>
 
@@ -81,8 +44,8 @@
             return {
                 defaultMenu: '',
                 isCollapse: false,
-                menuWidth: '210px',
                 openName: [],
+                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
             };
         },
         computed: {
@@ -107,54 +70,82 @@
             activeTextColor: String,
             activeBg: String,
         },
+        watch: {
+            menuList(newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    this.initMenu();
+                }
+            },
+            $route(val) {
+                this.defaultMenu = val.path.substr(1);
+                let { parentPath } = this.getCurrentMenuItem(this.defaultMenu);
+                this.updateOpen(parentPath);
+            },
+        },
         created() {
             this.initMenu();
         },
         methods: {
             initMenu() {
-                this.defaultMenu = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path;
-                this.openName = [this.menuList[0].path];
+                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path,
+                    { parentPath, menuItem } = this.getCurrentMenuItem(path);
 
-                this.$emit('click', { path: this.defaultMenu, parentPath: '', menuItem: this.getCurrentMenuItem(this.defaultMenu) });
+                this.updateOpen(parentPath);
+                this.routerChange(path);
+                this.$emit('click', { path, parentPath, menuItem });
             },
-            handleSelect(index, indexPath) {
-                console.log(index);
-                let citem = this.getCurrentMenuItem(index);
-
+            handleSelect(path) {
+                if (path === this.$route.path.substr(1)) {
+                    return;
+                }
+                let { parentPath, menuItem } = this.getCurrentMenuItem(path);
+                this.routerChange(path);
                 // 输出的menuItem
                 // interface outMenuItem {
                 //     path: string; // 当前三级menu的path
                 //     parentPath: string; // 当前二级的的path
                 //     menuItem: menuItem; // 当前三级menu的menuItem
                 // }
-                this.$emit('click', { path: index, parentPath: indexPath[0], menuItem: citem });
+                this.$emit('click', { path, parentPath, menuItem });
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
-                this.menuWidth = this.isCollapse ? '64px' : '210px';
             },
-
+            updateOpen(parentPath) {
+                this.openName = [parentPath];
+                this.$nextTick(() => {
+                    this.$refs.menuRef.updateOpened();
+                    this.$refs.menuRef.updateActiveName();
+                });
+            },
             getCurrentMenuItem(path) {
-                let m = null;
+                let m = null,
+                    p = '';
                 this.menuList.forEach(item => {
                     if (item.children && item.children.length > 0) {
                         item.children.forEach(ele => {
                             if (ele.path === path) {
+                                p = item.path;
                                 m = ele;
                             }
                         });
                     }
                 });
-                return m;
+                return { parentPath: p, menuItem: m };
+            },
+            routerChange(path, cb) {
+                if (path !== this.$route.path.substr(1)) {
+                    this.$router.push(path);
+                    if (cb && typeof cb === 'function') {
+                        cb();
+                    }
+                }
             },
         },
-        // updated() {
-        //     this.initMenu();
-        // },
     };
 </script>
 
-<style lang="scss">
+<style lang="less">
     .sidebar-menu {
         position: relative;
         height: 100%;
@@ -169,38 +160,56 @@
             height: 100%;
             overflow: auto;
             border-right: 0;
-            color: #61677a;
-            .el-submenu.is-active {
-                // 配置文字颜色
-                .el-submenu__title {
-                    .menuicon {
-                        color: var(--elmenu-active-text-color);
-                    }
-                    & > span {
-                        color: var(--elmenu-active-text-color);
+            .ivu-menu-submenu {
+                &.ivu-menu-item-active {
+                    // 配置文字颜色
+                    .ivu-menu-submenu-title {
+                        .menuicon {
+                            color: var(--elmenu-active-text-color);
+                        }
+                        & > span {
+                            color: var(--elmenu-active-text-color);
+                        }
                     }
                 }
+                .ivu-menu-submenu-title {
+                    display: flex;
+                    align-items: center;
+                    height: 50px;
+                }
             }
-            .el-submenu__title:hover {
+            .ivu-menu-submenu-title:hover {
                 background: var(--elmenu-background);
             }
             .menuicon {
-                font-size: 16px;
                 margin-right: 8px;
+                // vertical-align: bottom;
             }
-            .el-menu {
-                .el-menu-item {
-                    padding-left: 48px !important;
+            .ivu-menu {
+                .ivu-menu-item {
+                    height: 40px;
+                    line-height: 40px;
+                    padding: 0 24px 0 48px;
+                    padding-left: 50px !important;
 
                     &:hover {
                         background: var(--elmenu-background);
+                        span {
+                            color: var(--elmenu-active-text-color);
+                        }
                     }
-                    &.is-active {
+                    &.ivu-menu-item-active {
                         background: var(--elmenu-background);
+                        span {
+                            color: var(--elmenu-active-text-color);
+                        }
                     }
                     span {
                         font-weight: 700;
                     }
+                }
+                .ivu-menu-item-active:not(.ivu-menu-submenu):after {
+                    width: 0;
                 }
             }
 
@@ -210,12 +219,6 @@
                     padding-left: 16px !important;
                     padding-right: 16px;
                 }
-            }
-
-            .el-menu-item,
-            .el-submenu__title {
-                height: 40px;
-                line-height: 40px;
             }
         }
 
