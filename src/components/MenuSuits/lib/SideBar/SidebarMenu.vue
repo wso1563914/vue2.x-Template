@@ -12,7 +12,8 @@
             <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
                 <template slot="title">
                     <!-- 图片是iconfont的图片,UI出图，后台配置 -->
-                    <i :class="['menuicon', 'iconfont', item.icon]"></i>
+                    <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
+                    <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <el-menu-item v-for="(el, j) in item.children" :key="j" :index="el.path">
@@ -43,6 +44,7 @@
             return {
                 defaultMenu: '',
                 isCollapse: false,
+                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
             };
         },
         computed: {
@@ -120,15 +122,21 @@
             height: 100%;
             overflow: auto;
             border-right: 0;
-            .el-submenu.is-active {
-                // 配置文字颜色
+            .el-submenu {
+                &.is-active {
+                    // 配置文字颜色
+                    .el-submenu__title {
+                        .menuicon {
+                            color: var(--elmenu-active-text-color);
+                        }
+                        & > span {
+                            color: var(--elmenu-active-text-color);
+                        }
+                    }
+                }
                 .el-submenu__title {
-                    .menuicon {
-                        color: var(--elmenu-active-text-color);
-                    }
-                    & > span {
-                        color: var(--elmenu-active-text-color);
-                    }
+                    height: 50px;
+                    line-height: 50px;
                 }
             }
             .el-submenu__title:hover {
@@ -140,6 +148,8 @@
             }
             .el-menu {
                 .el-menu-item {
+                    height: 40px;
+                    line-height: 40px;
                     padding-left: 48px !important;
 
                     &:hover {
@@ -160,12 +170,6 @@
                     padding-left: 16px !important;
                     padding-right: 16px;
                 }
-            }
-
-            .el-menu-item,
-            .el-submenu__title {
-                height: 40px;
-                line-height: 40px;
             }
         }
 

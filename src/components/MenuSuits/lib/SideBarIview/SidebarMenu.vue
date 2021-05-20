@@ -17,17 +17,17 @@
                 <!-- 展开并且有子菜单 -->
                 <Submenu v-if="!isCollapse && item.children.length" v-bind:key="componentIndex" :name="componentIndex">
                     <template slot="title">
-                        <Icon :type="item.icon" />
+                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
                         <span>{{ item.name }}</span>
                     </template>
-                    <MenuItem v-for="(children, index) in item.children" :key="index" :name="children.to" :to="children.to">
+                    <MenuItem v-for="(children, index) in item.children" :key="index" :name="children.path" :to="children.path">
                         {{ children.name }}
                     </MenuItem>
                 </Submenu>
 
                 <!-- 展开但没有子菜单 -->
-                <MenuItem v-else-if="!isCollapse" :name="item.to" :to="item.to" v-bind:key="componentIndex">
-                    <Icon :type="item.icon" />
+                <MenuItem v-else-if="!isCollapse" :name="item.path" :to="item.path" v-bind:key="componentIndex">
+                    <i :class="['menuicon', 'iconfont', item.icon]"></i>
                     <span>{{ item.name }}</span>
                 </MenuItem>
 
@@ -38,8 +38,8 @@
                     placement="right-start"
                     class="menu-dropdown"
                 >
-                    <MenuItem :name="item.to" :to="item.to">
-                        <Icon :type="item.icon" />
+                    <MenuItem :name="item.path" :to="item.path">
+                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
                         <span>{{ item.name }}</span>
                     </MenuItem>
                     <DropdownMenu slot="list">
@@ -51,8 +51,8 @@
 
                 <!-- 不展开无子菜单 -->
                 <Tooltip v-else-if="isCollapse" :content="item.name" placement="right" v-bind:key="componentIndex">
-                    <MenuItem :name="item.to" :to="item.to">
-                        <Icon :type="item.icon" />
+                    <MenuItem :name="item.path" :to="item.path">
+                        <i :class="['menuicon', 'iconfont', item.icon]"></i>
                         <span>{{ item.name }}</span>
                     </MenuItem>
                 </Tooltip>
