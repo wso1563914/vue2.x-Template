@@ -9,9 +9,12 @@ import store from './store';
 import './assets/iconfont/iconfont.js';
 import './assets/iconfont/iconfont.css';
 
+import MenuSuits from './components/MenuSuits/index';
+
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.config.productionTip = false;
+Vue.use(MenuSuits);
 
 new Vue({
     router,

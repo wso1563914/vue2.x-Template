@@ -40,6 +40,7 @@
     //     [key: string]: any;
     // }
     export default {
+        name: 'ISidebarMenu',
         data() {
             return {
                 defaultMenu: '',
@@ -83,6 +84,10 @@
             },
         },
         created() {
+            console.log(this.menuList);
+            if (this.menuList.length == 0) {
+                return;
+            }
             this.initMenu();
         },
         methods: {

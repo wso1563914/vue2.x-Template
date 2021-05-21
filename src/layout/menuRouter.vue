@@ -1,17 +1,14 @@
 <template>
     <!-- 带有顶部和侧边菜单的Router -->
     <div class="gem-container">
-        <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
-            <!-- <svg class="logo-icon" slot="logo">
-                <use xlink:href="#iconjuhelogo2x"></use>
-            </svg> -->
+        <!-- <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
             <span style="height: 100%" slot="otherIcon">
                 <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
                     <use xlink:href="#iconsousuo2x"></use>
                 </svg>
             </span>
             <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
-        </TopMenu>
+        </TopMenu> -->
         <main>
             <!-- <SidebarMenu
                 :menuList="sidebarMenuList"
@@ -36,16 +33,17 @@
 </template>
 
 <script lang="ts">
-    import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
+    // import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
+    // import { TopMenu } from '@/components/MenuSuits';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
     @Component({
         components: {
-            TopMenu,
-            SidebarMenu,
-            ISidebarMenu,
-            UserDropdown,
+            // TopMenu,
+            // SidebarMenu,
+            // ISidebarMenu,
+            // UserDropdown,
         },
     })
     export default class MenuRouter extends Vue {
