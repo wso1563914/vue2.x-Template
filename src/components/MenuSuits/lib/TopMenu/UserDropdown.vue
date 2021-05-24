@@ -25,7 +25,7 @@
     </el-dropdown>
 </template>
 
-<script lang="ts">
+<script>
     // interface CommandItem {
     //     name: string;
     //     icon: string;
