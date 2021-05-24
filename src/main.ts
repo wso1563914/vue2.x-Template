@@ -9,12 +9,13 @@ import store from './store';
 import './assets/iconfont/iconfont.js';
 import './assets/iconfont/iconfont.css';
 
-import MenuSuits from './components/MenuSuits/index';
+import SidebarMenu from '@/third/sidebarMenu/sidebar-menu.umd';
 
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.config.productionTip = false;
-Vue.use(MenuSuits);
+// Vue.use(MenuSuits);
+Vue.use(SidebarMenu);
 
 new Vue({
     router,
