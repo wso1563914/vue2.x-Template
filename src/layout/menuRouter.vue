@@ -1,29 +1,29 @@
 <template>
     <!-- 带有顶部和侧边菜单的Router -->
     <div class="gem-container">
-        <!-- <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
+        <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
             <span style="height: 100%" slot="otherIcon">
                 <svg class="bell-icon" aria-hidden="true" style="width: 18px; height: 100%; margin-right: 32px">
                     <use xlink:href="#iconsousuo2x"></use>
                 </svg>
             </span>
             <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
-        </TopMenu> -->
+        </TopMenu>
         <main>
-            <!-- <SidebarMenu
+            <SidebarMenu
                 :menuList="sidebarMenuList"
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
                 v-if="isShowSidebarMenu"
             >
-            </SidebarMenu> -->
-            <ISidebarMenu
+            </SidebarMenu>
+            <!-- <ISidebarMenu
                 :menuList="sidebarMenuList"
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
                 v-if="isShowSidebarMenu"
             >
-            </ISidebarMenu>
+            </ISidebarMenu> -->
 
             <div class="main-container">
                 <router-view></router-view>
@@ -34,16 +34,16 @@
 
 <script lang="ts">
     // import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
-    // import { TopMenu } from '@/components/MenuSuits';
+    import { TopMenu, UserDropdown } from '@/components/MenuSuits/';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
     @Component({
         components: {
-            // TopMenu,
+            TopMenu,
             // SidebarMenu,
             // ISidebarMenu,
-            // UserDropdown,
+            UserDropdown,
         },
     })
     export default class MenuRouter extends Vue {
