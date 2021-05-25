@@ -34,6 +34,7 @@
     //     img: '',
     // }
     export default {
+        name: 'UserDropdown',
         data() {
             return {
                 defaultAvater: `this.src="${require('./icon/avater.png')}";this.onerror=null`,

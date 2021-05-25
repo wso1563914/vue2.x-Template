@@ -34,6 +34,7 @@
     //     [key: string]: any;
     // }
     export default {
+        name: 'TopMenu',
         model: {
             props: 'actived',
             event: 'on-active-change',

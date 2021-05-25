@@ -43,6 +43,7 @@
     //     [key: string]: any;
     // }
     export default {
+        name: 'SidebarMenu',
         data() {
             return {
                 defaultMenu: '',

@@ -150,7 +150,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="scss">
     .sidebar-menu {
         position: relative;
         height: 100%;
