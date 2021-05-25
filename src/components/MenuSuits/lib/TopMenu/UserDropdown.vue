@@ -5,27 +5,24 @@
             <img class="menu-user-head" :src="userInfo.img" :onerror="defaultAvater" />
             <span>{{ userInfo.name }}</span>
         </div>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" class="top-dropdown-menu">
             <el-dropdown-item class="dr-photo">{{ userInfo.phone }}</el-dropdown-item>
             <template v-if="commandList.length > 0">
-                <el-dropdown-item
-                    class="dr-normal"
-                    v-for="(item, i) in commandList"
-                    :key="i"
-                    :icon="'iconfont ' + item.icon"
-                    :command="item.command"
-                    >{{ item.name }}</el-dropdown-item
-                >
+                <el-dropdown-item class="dr-normal" v-for="(item, i) in commandList" :key="i" :command="item.command">
+                    <img :src="item.icon" :onerror="defaultIcon" />
+                    <span>{{ item.name }}</span>
+                </el-dropdown-item>
             </template>
 
-            <el-dropdown-item class="dr-out" divided icon="iconfont icondingbudaohang_tuichu2x" command="logout">
+            <el-dropdown-item class="dr-out" command="logout">
+                <img src="./icon/exit.png" alt="" />
                 <span>退出登录</span>
             </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
 
-<script lang="ts">
+<script>
     // interface CommandItem {
     //     name: string;
     //     icon: string;
@@ -40,6 +37,7 @@
         data() {
             return {
                 defaultAvater: `this.src="${require('./icon/avater.png')}";this.onerror=null`,
+                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
             };
         },
         props: {
@@ -79,18 +77,28 @@
                 margin-right: 4px;
             }
         }
-        .el-dropdown-menu {
-            padding: 0;
+    }
+    .top-dropdown-menu {
+        padding: 0;
+        .el-dropdown-menu__item {
+            line-height: 1;
+            img {
+                width: 16px;
+                height: 16px;
+                vertical-align: bottom;
+                margin-right: 8px;
+            }
         }
         .dr-photo {
             padding: 11px 12px;
-            margin-bottom: 12px;
             color: #212121;
             border-bottom: 1px solid #f5f5f5;
+            cursor: default;
         }
         .dr-normal {
             color: #61677a;
-            margin-bottom: 12px;
+            padding: 12px 12px;
+            // margin-bottom: 12px;
         }
         .dr-out {
             padding: 11px 12px;
