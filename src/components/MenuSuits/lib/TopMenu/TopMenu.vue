@@ -1,5 +1,5 @@
 <template>
-    <div class="main-top-menu">
+    <div class="main-top-menu reset">
         <div class="logo-box" @click="logoClick">
             <img :src="logo" :alt="alt" v-if="logo" />
             <!-- svg需要用slot -->
@@ -82,6 +82,13 @@
 </script>
 
 <style lang="scss">
+    // reset styles
+    .reset {
+        ul li {
+            list-style: none;
+        }
+    }
+
     .main-top-menu {
         display: flex;
         width: 100%;
