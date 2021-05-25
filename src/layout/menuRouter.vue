@@ -34,16 +34,20 @@
 
 <script lang="ts">
     // import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
-    import { TopMenu, UserDropdown } from '@/components/MenuSuits/';
+    // import { TopMenu, UserDropdown } from '@/components/MenuSuits/';
     import { Component, Vue } from 'vue-property-decorator';
+    import TopMenu from '@/third/topMenu/TopMenu.js';
+    import UserDropdown from '@/third/topMenu/UserDropdown.js';
 
     import menuList from '@/menu.js';
+    Vue.use(TopMenu);
+    Vue.use(UserDropdown);
     @Component({
         components: {
-            TopMenu,
+            // TopMenu,
             // SidebarMenu,
             // ISidebarMenu,
-            UserDropdown,
+            // UserDropdown,
         },
     })
     export default class MenuRouter extends Vue {

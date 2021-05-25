@@ -19,7 +19,6 @@
         <UserDropdown
             slot="otherIcon"
             :userInfo="userInfo"
-            userInfoIcon="iconguanliyuan2x"
             :commandList="commandList"
             @click="commandClick"
         ></UserDropdown>
@@ -57,7 +56,6 @@ TopMenuItem {
     <UserDropdown
         slot="otherIcon"
         :userInfo="userInfo"
-        userInfoIcon="iconguanliyuan2x"
         :commandList="commandList"
         @click="commandClick"
     ></UserDropdown>
@@ -75,14 +73,15 @@ TopMenuItem {
 
     // 用户信息
     userInfo: {
-        realname: '张三',
+        name: '张三',
         phone: '1234566344',
+        img: ''
     };
 
 ### method
 click: 指令点击事件
 
-userInfoIcon: 用户名字旁边的icon 暂时为iconfont
+userInfoIcon: 用户名字旁边的icon require进来的图片
 
 commandClick(command: string): void {
     if (command === 'linkUs') {
