@@ -33,30 +33,26 @@
 </template>
 
 <script lang="ts">
-    // import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
+    import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
     // import { TopMenu, UserDropdown } from '@/components/MenuSuits/';
     import { Component, Vue } from 'vue-property-decorator';
-    import TopMenu from '@/third/topMenu/TopMenu.js';
-    import UserDropdown from '@/third/topMenu/UserDropdown.js';
+    // import TopMenu from '@/third/topMenu/TopMenu.js';
+    // import UserDropdown from '@/third/topMenu/UserDropdown.js';
 
     import menuList from '@/menu.js';
-    Vue.use(TopMenu);
-    Vue.use(UserDropdown);
+    // Vue.use(TopMenu);
+    // Vue.use(UserDropdown);
     @Component({
         components: {
-            // TopMenu,
-            // SidebarMenu,
-            // ISidebarMenu,
-            // UserDropdown,
+            TopMenu,
+            SidebarMenu,
+            ISidebarMenu,
+            UserDropdown,
         },
     })
     export default class MenuRouter extends Vue {
         menuArr: any[] = [];
-        userInfo: any = {
-            name: '张三',
-            phone: '1234566344',
-            img: '',
-        };
+        userInfo: any = {};
         topActiveMenu = 'home';
         commandList: any[] = [];
         sidebarMenuList: any[] = [];
@@ -74,14 +70,21 @@
                     };
                 }
             });
+            setTimeout(() => {
+                this.userInfo = {
+                    name: '张三',
+                    phone: '1234566344',
+                    img: '',
+                };
 
-            this.commandList = [
-                {
-                    name: '联系我们',
-                    icon: 'iconlianxi2x',
-                    command: 'linkUs',
-                },
-            ];
+                this.commandList = [
+                    {
+                        name: '联系我们',
+                        icon: 'iconlianxi2x',
+                        command: 'linkUs',
+                    },
+                ];
+            }, 2000);
         }
 
         topMenuClick(obj: any): void {

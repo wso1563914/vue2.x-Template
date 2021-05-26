@@ -1,7 +1,7 @@
 <template>
     <!-- 顶部菜单右边的用户名和下拉抽屉 -->
     <el-dropdown @command="dropDownClick" class="top-dropdown">
-        <div class="username" v-if="userInfo.name">
+        <div class="username">
             <img class="menu-user-head" :src="userInfo.img" :onerror="defaultAvater" />
             <span>{{ userInfo.name }}</span>
         </div>
@@ -43,10 +43,13 @@
         },
         props: {
             userInfo: {
-                default: {
-                    name: '',
-                    phone: '',
-                    img: '',
+                type: Object,
+                default: () => {
+                    return {
+                        name: '欢迎',
+                        phone: '',
+                        img: '',
+                    };
                 },
             },
             commandList: {
