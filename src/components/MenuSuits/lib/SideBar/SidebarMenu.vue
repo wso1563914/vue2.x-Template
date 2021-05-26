@@ -88,13 +88,14 @@
         },
         methods: {
             initMenu() {
-                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].path,
+                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].name,
                     { parentPath, menuItem } = this.getCurrentMenuItem(path);
                 this.routerChange(path);
                 this.$emit('click', { path: path, parentPath, menuItem });
             },
             handleSelect(path) {
-                if (path === this.$route.path.substr(1)) {
+                // if (path === this.$route.path.substr(1)) {
+                if (path === this.$route.name || path === this.$route.path.substr(1)) {
                     return;
                 }
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
@@ -129,7 +130,7 @@
             },
 
             routerChange(path, cb) {
-                if (path !== this.$route.path.substr(1)) {
+                if (path === this.$route.name || path === this.$route.path.substr(1)) {
                     this.$router.push(path);
                     if (cb && typeof cb === 'function') {
                         cb();
@@ -144,7 +145,7 @@
     .sidebar-menu {
         position: relative;
         height: 100%;
-        padding-bottom: 40px;
+        // padding-bottom: 40px;
         box-sizing: border-box;
         // background: #fff;
         overflow: hidden;

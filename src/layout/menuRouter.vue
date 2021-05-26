@@ -65,7 +65,7 @@
                 if (item.parentId == -1) {
                     return {
                         path: item.path,
-                        name: item.title,
+                        title: item.title,
                         children: item.children,
                     };
                 }

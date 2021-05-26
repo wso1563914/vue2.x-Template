@@ -15,7 +15,7 @@
                     :key="i"
                     @click="firstRouteClick(item.path, item)"
                 >
-                    <span>{{ item.name }}</span>
+                    <span>{{ item.title }}</span>
                 </li>
             </ul>
         </div>

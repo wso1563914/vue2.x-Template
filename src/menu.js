@@ -28,13 +28,13 @@ export default {
                     id: 12100,
                     parentId: 12000,
                     code: null,
-                    name: '人员管理',
+                    name: 'peopleManagement',
                     children: [
                         {
                             id: 20002,
                             parentId: 12100,
                             code: null,
-                            name: '人员动态',
+                            name: 'home',
                             children: [],
                             hasChildren: false,
                             icon: 'icondelete2x',
@@ -50,7 +50,7 @@ export default {
                             id: 20004,
                             parentId: 12100,
                             code: null,
-                            name: '人员轨迹',
+                            name: 'personnelTrack',
                             children: [],
                             hasChildren: false,
                             icon: null,
@@ -77,13 +77,13 @@ export default {
                     id: 12200,
                     parentId: 12000,
                     code: null,
-                    name: '排班管理',
+                    name: 'scheduleManagement',
                     children: [
                         {
                             id: 20005,
                             parentId: 12200,
                             code: null,
-                            name: '排班管理',
+                            name: 'scheduleIndex',
                             children: [],
                             hasChildren: false,
                             icon: null,
@@ -122,19 +122,19 @@ export default {
             id: 13000,
             parentId: -1,
             code: null,
-            name: '旅游中心',
+            name: 'managementCenter1111',
             children: [
                 {
                     id: 13100,
                     parentId: 13000,
                     code: null,
-                    name: '旅游管理',
+                    name: 'travelManagement',
                     children: [
                         {
                             id: 30002,
                             parentId: 13100,
                             code: null,
-                            name: '旅游人员动态',
+                            name: 'peopleDynamics',
                             children: [],
                             hasChildren: false,
                             icon: 'icondelete2x',
