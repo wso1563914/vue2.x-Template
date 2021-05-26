@@ -10,7 +10,7 @@
         <div class="menu-box">
             <ul>
                 <li
-                    :class="{ active: currentMenuPath == item.path }"
+                    :class="{ active: actived == item.path }"
                     v-for="(item, i) in topMenuList"
                     :key="i"
                     @click="firstRouteClick(item.path, item)"
@@ -36,13 +36,8 @@
     export default {
         name: 'TopMenu',
         model: {
-            props: 'actived',
+            prop: 'actived',
             event: 'on-active-change',
-        },
-        data() {
-            return {
-                currentMenuPath: '',
-            };
         },
         props: {
             logo: {
@@ -64,16 +59,12 @@
             },
         },
 
-        created() {
-            this.currentMenuPath = this.actived;
-        },
         methods: {
             logoClick() {
                 this.$emit('logoClick');
             },
             // 一级导航点击
             firstRouteClick(path, menuItem) {
-                this.currentMenuPath = path;
                 this.$emit('on-active-change', path);
                 this.$emit('on-menu-click', { path, menuItem });
             },

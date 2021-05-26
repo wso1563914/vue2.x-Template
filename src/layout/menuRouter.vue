@@ -84,6 +84,8 @@
                         command: 'linkUs',
                     },
                 ];
+
+                this.topActiveMenu = 'managementCenter';
             }, 2000);
         }
 

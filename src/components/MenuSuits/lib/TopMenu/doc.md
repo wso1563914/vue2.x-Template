@@ -7,7 +7,7 @@
 
 ## demo
 ```
-    <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick">
+    <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :active="activeMenu">
         <svg class="logo-icon" slot="logo">
             <use xlink:href="#iconjuhelogo2x"></use>
         </svg>
@@ -32,6 +32,7 @@ logo可以传:logo="图片地址"， 或者用slot="logo"自己上传
 
 ## menu
 ```
+// 数组数据
 :topMenuList="arr"
 
 arr: topMenuItem = {
@@ -43,6 +44,11 @@ TopMenuItem {
     path: string; // 这里可以填路由中的path或者name
     name: string;
 }
+
+// 当前高亮菜单名称
+v-model="activeMenu"
+
+activeMenu: 路由的path
 ```
 
 
