@@ -76,43 +76,43 @@
         watch: {
             menuList(newVal, oldVal) {
                 if (newVal !== oldVal) {
-                    this.initMenu();
+                    this.initMenu(this.menuList[0].children[0].name);
                 }
             },
             $route(val) {
-                this.defaultMenu = val.path.substr(1);
+                this.defaultMenu = val.name;
             },
         },
         created() {
-            this.initMenu();
+            if (this.menuList.length == 0) {
+                return;
+            }
+            let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.$route.name;
+            this.initMenu(path);
         },
         methods: {
-            initMenu() {
-                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].name,
-                    { parentPath, menuItem } = this.getCurrentMenuItem(path);
+            initMenu(path) {
+                let { parentPath, menuItem } = this.getCurrentMenuItem(path);
+                this.defaultMenu = path;
+                console.log(this.defaultMenu);
+
                 this.routerChange(path);
-                this.$emit('click', { path: path, parentPath, menuItem });
+                this.emitClick(path, parentPath, menuItem);
             },
             handleSelect(path) {
-                // if (path === this.$route.path.substr(1)) {
-                if (path === this.$route.name || path === this.$route.path.substr(1)) {
+                if (path === this.$route.name) {
                     return;
                 }
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
-                this.$router.push(path);
+                this.routerChange(path);
 
-                // 输出的menuItem
-                // interface menuItem {
-                //     path: string; // 当前三级menu的path
-                //     parentPath: string; // 当前二级的的path
-                //     menuItem: menuItem; // 当前三级menu的menuItem
-                // }
-                this.$emit('click', { path, parentPath, menuItem });
+                this.emitClick(path, parentPath, menuItem);
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
 
+            // 获取当前菜单的对象和父级菜单name
             getCurrentMenuItem(path) {
                 let m = null,
                     p = '';
@@ -129,13 +129,30 @@
                 return { parentPath: p, menuItem: m };
             },
 
+            // 路由改变时push
             routerChange(path, cb) {
-                if (path === this.$route.name || path === this.$route.path.substr(1)) {
-                    this.$router.push(path);
-                    if (cb && typeof cb === 'function') {
-                        cb();
-                    }
+                if (path === this.$route.name) {
+                    return;
                 }
+                if (path.indexOf('/') === -1) {
+                    this.$router.push({ name: path });
+                } else {
+                    this.$router.push(path);
+                }
+                if (cb && typeof cb === 'function') {
+                    cb();
+                }
+            },
+            /**
+             * 输出的menuItem
+             *  interface outMenuItem {
+             *      path: string; 当前三级menu的path
+             *      parentPath: string; 当前二级的的path
+             *      menuItem: menuItem; 当前三级menu的menuItem
+             * }
+             */
+            emitClick(path, parentPath, menuItem) {
+                this.$emit('click', { path, parentPath, menuItem });
             },
         },
     };

@@ -10,10 +10,10 @@
         <div class="menu-box">
             <ul>
                 <li
-                    :class="{ active: actived == item.path }"
+                    :class="{ active: actived == item.name }"
                     v-for="(item, i) in topMenuList"
                     :key="i"
-                    @click="firstRouteClick(item.path, item)"
+                    @click="firstRouteClick(item.name, item)"
                 >
                     <span>{{ item.title }}</span>
                 </li>

@@ -7,7 +7,8 @@
                     <use xlink:href="#iconsousuo2x"></use>
                 </svg>
             </span>
-            <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
+            <!-- <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown> -->
+            <UserDropdownIView slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdownIView>
         </TopMenu>
         <main>
             <SidebarMenu
@@ -22,6 +23,7 @@
                 active-text-color="#26bee6"
                 active-bg="rgba(40, 230, 40, 0.1)"
                 v-if="isShowSidebarMenu"
+                :defaultActiveMenu="defaultActiveMenu"
             >
             </ISidebarMenu> -->
 
@@ -33,7 +35,7 @@
 </template>
 
 <script lang="ts">
-    import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu } from '@/components/MenuSuits';
+    import { TopMenu, ISidebarMenu, UserDropdown, SidebarMenu, UserDropdownIView } from '@/components/MenuSuits';
     // import { TopMenu, UserDropdown } from '@/components/MenuSuits/';
     import { Component, Vue } from 'vue-property-decorator';
     // import TopMenu from '@/third/topMenu/TopMenu.js';
@@ -48,12 +50,14 @@
             SidebarMenu,
             ISidebarMenu,
             UserDropdown,
+            UserDropdownIView,
         },
     })
     export default class MenuRouter extends Vue {
         menuArr: any[] = [];
         userInfo: any = {};
         topActiveMenu = 'home';
+        defaultActiveMenu = '';
         commandList: any[] = [];
         sidebarMenuList: any[] = [];
         isShowSidebarMenu = false;
@@ -61,16 +65,17 @@
         img: any = require('../assets/images/logo.png');
 
         created(): void {
-            this.menuArr = menuList.data.map(item => {
-                if (item.parentId == -1) {
-                    return {
-                        path: item.path,
-                        title: item.title,
-                        children: item.children,
-                    };
-                }
-            });
             setTimeout(() => {
+                this.menuArr = menuList.data.map(item => {
+                    if (item.parentId == -1) {
+                        return {
+                            title: item.title,
+                            path: item.path,
+                            name: item.name,
+                            children: item.children,
+                        };
+                    }
+                });
                 this.userInfo = {
                     name: '张三',
                     phone: '1234566344',
@@ -85,7 +90,7 @@
                     },
                 ];
 
-                this.topActiveMenu = 'managementCenter';
+                this.getFirstTopMenu(this.menuArr);
             }, 2000);
         }
 
@@ -98,11 +103,36 @@
             } else {
                 this.isShowSidebarMenu = false;
                 this.sidebarMenuList = [];
+                this.$router.push({ name: menuItem.name });
             }
         }
         commandClick(command: string): void {
             if (command === 'linkUs') {
-                console.log(111);
+                // console.log(111);
+            }
+        }
+        getFirstTopMenu(list) {
+            let path = this.$route.name;
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i];
+                if (item.children && item.children.length > 0) {
+                    for (let j = 0; j < item.children.length; j++) {
+                        const ele = item.children[j];
+                        if (ele.children && ele.children.length > 0) {
+                            for (let k = 0; k < ele.children.length; k++) {
+                                const el = ele.children[k];
+                                if (el.name === path) {
+                                    this.topMenuClick({ menuItem: item });
+                                    this.topActiveMenu = item.name;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else if (item.name === path) {
+                    this.topActiveMenu = item.name;
+                    break;
+                }
             }
         }
     }

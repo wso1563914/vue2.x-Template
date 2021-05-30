@@ -6,7 +6,7 @@ export default {
             id: 11000,
             parentId: -1,
             code: null,
-            name: '首页',
+            name: 'home',
             children: [],
             hasChildren: false,
             icon: '',
@@ -22,7 +22,7 @@ export default {
             id: 12000,
             parentId: -1,
             code: null,
-            name: '管理中心',
+            name: 'managementCenter',
             children: [
                 {
                     id: 12100,

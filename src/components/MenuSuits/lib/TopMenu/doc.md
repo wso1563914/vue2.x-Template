@@ -7,7 +7,7 @@
 
 ## demo
 ```
-    <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :active="activeMenu">
+    <TopMenu :topMenuList="menuArr" v-model="topActiveMenu" @on-menu-click="topMenuClick" :active="activeMenu" :logo="logoImg" :alt="alt">
         <svg class="logo-icon" slot="logo">
             <use xlink:href="#iconjuhelogo2x"></use>
         </svg>
@@ -25,7 +25,7 @@
     </TopMenu>
 ```
 ## logo
-logo可以传:logo="图片地址"， 或者用slot="logo"自己上传
+logo可以传:logo="require(图片地址)"， 或者用slot="logo"自己上传
 
 可以通过内部emit出的logoClick方法响应对logo的点击
 `@logoClick="abc"`
@@ -46,18 +46,17 @@ TopMenuItem {
 }
 
 // 当前高亮菜单名称
-v-model="activeMenu"
-
-activeMenu: 路由的path
+v-model="路由的name"
 ```
-
 
 ## right button group
 
 通过slot去添加按钮
 `<button slot="otherIcon">按钮</button>`
 
-## drapdown组件
+# drapdown组件
+
+## demo
 ```
     <UserDropdown
         slot="otherIcon"

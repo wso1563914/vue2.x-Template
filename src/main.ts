@@ -9,13 +9,14 @@ import store from './store';
 import './assets/iconfont/iconfont.js';
 import './assets/iconfont/iconfont.css';
 
-import SidebarMenu from '@/third/sidebarMenu/sidebar-menu.umd';
+// import SidebarMenu from '@/third/sidebarMenu/sidebar-menu.umd';
+// import SidebarMenu from 'lib';
 
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.config.productionTip = false;
-// Vue.use(MenuSuits);
-Vue.use(SidebarMenu);
+// Vue.use(SidebarMenu);
+// Vue.use(SidebarMenu);
 
 new Vue({
     router,

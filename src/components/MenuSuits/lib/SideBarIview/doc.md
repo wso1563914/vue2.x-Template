@@ -3,6 +3,7 @@
 ```
 <SidebarMenu
     :menuList="sidebarMenuList"
+    :defaultActiveMenu="home"
     active-text-color="#26bee6"
     active-bg="rgba(40, 230, 40, 0.1)"
     @click="handleSidebarClick"
@@ -12,6 +13,8 @@
 
 ## Props
 menuList: 二级菜单数组
+
+defaultActiveMenu: 默认高亮的菜单的name
 
 active-text-color： 选中字的颜色
 

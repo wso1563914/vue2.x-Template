@@ -9,13 +9,13 @@
             width="210px"
             accordion
         >
-            <Submenu v-for="(item, i) in menuList" :key="i" :name="item.path">
+            <Submenu v-for="(item, i) in menuList" :key="i" :name="item.name">
                 <template slot="title">
                     <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
                     <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
                     <span slot="title">{{ item.title }}</span>
                 </template>
-                <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.path">
+                <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.name">
                     <span>{{ el.title }}</span>
                 </MenuItem>
             </Submenu>
@@ -40,7 +40,7 @@
     //     [key: string]: any;
     // }
     export default {
-        name: 'ISidebarMenu',
+        name: 'SidebarMenuIView',
         data() {
             return {
                 defaultMenu: '',
@@ -74,7 +74,7 @@
         watch: {
             menuList(newVal, oldVal) {
                 if (newVal !== oldVal) {
-                    this.initMenu();
+                    this.initMenu(this.menuList[0].children[0].name);
                 }
             },
             $route(val) {
@@ -84,38 +84,32 @@
             },
         },
         created() {
-            console.log(this.menuList);
             if (this.menuList.length == 0) {
                 return;
             }
-            this.initMenu();
+            let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.$route.name;
+            this.defaultMenu = path;
+            this.initMenu(path);
         },
         methods: {
-            initMenu() {
-                let path = this.defaultActiveMenu ? this.defaultActiveMenu : this.menuList[0].children[0].name,
-                    { parentPath, menuItem } = this.getCurrentMenuItem(path);
-
+            initMenu(path) {
+                let { parentPath, menuItem } = this.getCurrentMenuItem(path);
                 this.updateOpen(parentPath);
                 this.routerChange(path);
-                this.$emit('click', { path, parentPath, menuItem });
+                this.emitClick(path, parentPath, menuItem);
             },
             handleSelect(path) {
-                if (path === this.$route.name || path === this.$route.path.substr(1)) {
+                if (path === this.$route.name) {
                     return;
                 }
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
                 this.routerChange(path);
-                // 输出的menuItem
-                // interface outMenuItem {
-                //     path: string; // 当前三级menu的path
-                //     parentPath: string; // 当前二级的的path
-                //     menuItem: menuItem; // 当前三级menu的menuItem
-                // }
-                this.$emit('click', { path, parentPath, menuItem });
+                this.emitClick(path, parentPath, menuItem);
             },
             hadleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
+            // 更新当前高亮
             updateOpen(parentPath) {
                 this.openName = [parentPath];
                 this.$nextTick(() => {
@@ -126,11 +120,12 @@
             getCurrentMenuItem(path) {
                 let m = null,
                     p = '';
+
                 this.menuList.forEach(item => {
                     if (item.children && item.children.length > 0) {
                         item.children.forEach(ele => {
-                            if (ele.path === path) {
-                                p = item.path;
+                            if (ele.name === path) {
+                                p = item.name;
                                 m = ele;
                             }
                         });
@@ -139,12 +134,28 @@
                 return { parentPath: p, menuItem: m };
             },
             routerChange(path, cb) {
-                if (path === this.$route.name || path === this.$route.path.substr(1)) {
-                    this.$router.push(path);
-                    if (cb && typeof cb === 'function') {
-                        cb();
-                    }
+                if (path === this.$route.name || path === this.$route.path) {
+                    return;
                 }
+                if (path.indexOf('/') === -1) {
+                    this.$router.push({ name: path });
+                } else {
+                    this.$router.push(path);
+                }
+                if (cb && typeof cb === 'function') {
+                    cb();
+                }
+            },
+            /**
+             * 输出的menuItem
+             *  interface outMenuItem {
+             *      path: string; 当前三级menu的path
+             *      parentPath: string; 当前二级的的path
+             *      menuItem: menuItem; 当前三级menu的menuItem
+             * }
+             */
+            emitClick(path, parentPath, menuItem) {
+                this.$emit('click', { path, parentPath, menuItem });
             },
         },
     };
@@ -154,7 +165,7 @@
     .sidebar-menu {
         position: relative;
         height: 100%;
-        padding-bottom: 40px;
+        // padding-bottom: 40px;
         box-sizing: border-box;
         // background: #fff;
         overflow: hidden;

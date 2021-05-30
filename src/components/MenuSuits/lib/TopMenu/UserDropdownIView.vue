@@ -1,25 +1,25 @@
 <template>
     <!-- 顶部菜单右边的用户名和下拉抽屉 -->
-    <el-dropdown @command="dropDownClick" class="top-dropdown">
+    <Dropdown @on-click="dropDownClick" class="top-dropdown" transfer>
         <div class="username">
             <img class="menu-user-head" :src="userInfo.img" :onerror="defaultAvater" />
             <span>{{ userInfo.name }}</span>
         </div>
-        <el-dropdown-menu slot="dropdown" class="top-dropdown-menu">
-            <el-dropdown-item class="dr-photo" v-if="userInfo.phone">{{ userInfo.phone }}</el-dropdown-item>
+        <DropdownMenu slot="list" class="top-dropdown-menu">
+            <DropdownItem class="dr-photo" v-if="userInfo.phone">{{ userInfo.phone }}</DropdownItem>
             <template v-if="commandList.length > 0">
-                <el-dropdown-item class="dr-normal" v-for="(item, i) in commandList" :key="i" :command="item.command">
+                <DropdownItem class="dr-normal" v-for="(item, i) in commandList" :key="i" :name="item.command">
                     <img :src="item.icon" :onerror="defaultIcon" />
                     <span>{{ item.name }}</span>
-                </el-dropdown-item>
+                </DropdownItem>
             </template>
 
-            <el-dropdown-item class="dr-out" command="logout">
+            <DropdownItem class="dr-out" name="logout">
                 <img src="./icon/exit.png" alt="" />
                 <span>退出登录</span>
-            </el-dropdown-item>
-        </el-dropdown-menu>
-    </el-dropdown>
+            </DropdownItem>
+        </DropdownMenu>
+    </Dropdown>
 </template>
 
 <script>
@@ -68,6 +68,9 @@
 <style lang="scss">
     .top-dropdown {
         height: 100%;
+        .ivu-dropdown-rel {
+            height: 100%;
+        }
         .username {
             display: flex;
             justify-content: center;
@@ -84,12 +87,12 @@
     }
     .top-dropdown-menu {
         padding: 0;
-        .el-dropdown-menu__item {
+        .ivu-dropdown-item {
             line-height: 1;
             img {
                 width: 16px;
                 height: 16px;
-                vertical-align: bottom;
+                vertical-align: text-bottom;
                 margin-right: 8px;
             }
         }
