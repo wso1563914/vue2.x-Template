@@ -11,8 +11,8 @@
         >
             <Submenu v-for="(item, i) in menuList" :key="i" :name="item.name">
                 <template slot="title">
-                    <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
-                    <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
+                    <i :class="['menuicon', 'iconfont', item.icon]" v-if="item.isFont"></i>
+                    <img class="menuicon" :src="item.icon ? item.icon : defaultIcon" v-else />
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <MenuItem v-for="(el, j) in item.children" :key="j" :name="el.name">
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-    // import { Component, Vue, Prop } from 'vue-property-decorator';
     // interface menuItem {
     //     path: string; // 路由的path
     //     name: string; // 路由的name
@@ -39,17 +38,21 @@
     //     title: string; // 路由的名称
     //     [key: string]: any;
     // }
+    import PlaceholderImg from './icon/placeholder.png';
     export default {
-        name: 'SidebarMenuIView',
+        name: 'SideBarIView',
         data() {
             return {
                 defaultMenu: '',
                 isCollapse: false,
                 openName: [],
-                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
+                // defaultIcon: `this.src="${require()}";this.onerror=null`,
             };
         },
         computed: {
+            defaultIcon() {
+                return PlaceholderImg;
+            },
             // 设置css变量
             menuCssVar() {
                 return {
@@ -70,15 +73,20 @@
             },
             activeTextColor: String,
             activeBg: String,
+            autoPush: {
+                // 点击菜单的时候，是否通过菜单组件自动跳转页面
+                type: Boolean,
+                default: true,
+            },
         },
         watch: {
             menuList(newVal, oldVal) {
                 if (newVal !== oldVal) {
-                    this.initMenu(this.menuList[0].children[0].name);
+                    this.initMenu(newVal[0].children[0].name);
                 }
             },
             $route(val) {
-                this.defaultMenu = val.path.substr(1);
+                this.defaultMenu = val.name;
                 let { parentPath } = this.getCurrentMenuItem(this.defaultMenu);
                 this.updateOpen(parentPath);
             },
@@ -103,7 +111,9 @@
                     return;
                 }
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
-                this.routerChange(path);
+                if (this.autoPush) {
+                    this.routerChange(path);
+                }
                 this.emitClick(path, parentPath, menuItem);
             },
             hadleCollapse() {
@@ -134,14 +144,10 @@
                 return { parentPath: p, menuItem: m };
             },
             routerChange(path, cb) {
-                if (path === this.$route.name || path === this.$route.path) {
+                if (path === this.$route.name) {
                     return;
                 }
-                if (path.indexOf('/') === -1) {
-                    this.$router.push({ name: path });
-                } else {
-                    this.$router.push(path);
-                }
+                this.$router.push(path);
                 if (cb && typeof cb === 'function') {
                     cb();
                 }
@@ -165,17 +171,29 @@
     .sidebar-menu {
         position: relative;
         height: 100%;
-        // padding-bottom: 40px;
         box-sizing: border-box;
-        // background: #fff;
         overflow: hidden;
         box-shadow: 2px 0 6px 0 rgba(6, 25, 41, 0.07);
+
         .gem-sidebar-menu {
             position: relative;
             width: 210px;
             height: 100%;
             overflow: auto;
             border-right: 0;
+            box-sizing: border-box;
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 3;
+                height: 6px;
+                background-image: linear-gradient(0deg, #ffffff 0%, #f0f4f8 100%);
+            }
+            // margin-top: 10px;
+
             .ivu-menu-submenu {
                 &.ivu-menu-item-active {
                     // 配置文字颜色
@@ -207,6 +225,7 @@
                     line-height: 40px;
                     padding: 0 24px 0 48px;
                     padding-left: 50px !important;
+                    color: #61677a;
 
                     &:hover {
                         background: var(--elmenu-background);

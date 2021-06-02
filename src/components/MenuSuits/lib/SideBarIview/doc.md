@@ -14,11 +14,13 @@
 ## Props
 menuList: 二级菜单数组
 
-defaultActiveMenu: 默认高亮的菜单的name
+defaultActiveMenu: String 默认高亮的菜单的name
 
-active-text-color： 选中字的颜色
+active-text-color：String 选中字的颜色
 
-active-bg: 选中菜单的背景色
+active-bg: String 选中菜单的背景色
+
+autoPush: Boolean 点击菜单的时候，是否通过菜单组件自动跳转页面
 
 ## mehotd
 click: 点击菜单的方法，

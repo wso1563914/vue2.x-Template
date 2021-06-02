@@ -18,15 +18,6 @@
                 v-if="isShowSidebarMenu"
             >
             </SidebarMenu>
-            <!-- <ISidebarMenu
-                :menuList="sidebarMenuList"
-                active-text-color="#26bee6"
-                active-bg="rgba(40, 230, 40, 0.1)"
-                v-if="isShowSidebarMenu"
-                :defaultActiveMenu="defaultActiveMenu"
-            >
-            </ISidebarMenu> -->
-
             <div class="main-container">
                 <router-view></router-view>
             </div>
@@ -56,7 +47,7 @@
     export default class MenuRouter extends Vue {
         menuArr: any[] = [];
         userInfo: any = {};
-        topActiveMenu = 'home';
+        topActiveMenu = '';
         defaultActiveMenu = '';
         commandList: any[] = [];
         sidebarMenuList: any[] = [];
@@ -85,18 +76,24 @@
                 this.commandList = [
                     {
                         name: '联系我们',
-                        icon: 'iconlianxi2x',
+                        icon: 'iconfont iconlianxi2x',
                         command: 'linkUs',
+                        isFont: true,
+                    },
+                    {
+                        name: '联系我们2',
+                        icon: 'iconfont iconxiaozhang2x',
+                        command: 'linkUs2',
+                        isFont: true,
                     },
                 ];
 
                 this.getFirstTopMenu(this.menuArr);
-            }, 2000);
+            }, 300);
         }
 
         topMenuClick(obj: any): void {
             const { menuItem } = obj;
-            // this.topActiveMenu = path;
             if (menuItem && menuItem.children.length > 0) {
                 this.sidebarMenuList = menuItem.children;
                 this.isShowSidebarMenu = true;
@@ -111,6 +108,10 @@
                 // console.log(111);
             }
         }
+        // sideClick({ path }) {
+        //     // console.log(menu);
+        //     this.$router.push({ name: path });
+        // }
         getFirstTopMenu(list) {
             let path = this.$route.name;
             for (let i = 0; i < list.length; i++) {
@@ -151,6 +152,8 @@
             overflow: auto;
             .main-container {
                 flex: 1;
+                padding: 18px 16px;
+                box-sizing: border-box;
             }
         }
         .logo-icon {

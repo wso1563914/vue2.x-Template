@@ -14,8 +14,8 @@
             <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.path">
                 <template slot="title">
                     <!-- 图片是iconfont的图片,UI出图，后台配置 -->
-                    <!-- <i :class="['menuicon', 'iconfont', item.icon]"></i> -->
-                    <img class="menuicon" :src="item.icon" :onerror="defaultIcon" />
+                    <i :class="['menuicon', 'iconfont', item.icon]" v-if="item.isFont"></i>
+                    <img class="menuicon" :src="item.icon ? item.icon : defaultIcon" v-else />
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <el-menu-item v-for="(el, j) in item.children" :key="j" :index="el.path">
@@ -42,16 +42,19 @@
     //     title: string; // 路由的名称
     //     [key: string]: any;
     // }
+    import PlaceholderImg from './icon/placeholder.png';
     export default {
         name: 'SidebarMenu',
         data() {
             return {
                 defaultMenu: '',
                 isCollapse: false,
-                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
             };
         },
         computed: {
+            defaultIcon() {
+                return PlaceholderImg;
+            },
             // 设置css变量
             menuCssVar() {
                 return {
@@ -72,11 +75,18 @@
             },
             activeTextColor: String,
             activeBg: String,
+            autoPush: {
+                // 点击菜单的时候，是否通过菜单组件自动跳转页面
+                type: Boolean,
+                default: true,
+            },
         },
         watch: {
             menuList(newVal, oldVal) {
                 if (newVal !== oldVal) {
-                    this.initMenu(this.menuList[0].children[0].name);
+                    this.$nextTick(() => {
+                        this.initMenu(newVal[0].children[0].name);
+                    });
                 }
             },
             $route(val) {
@@ -94,8 +104,6 @@
             initMenu(path) {
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
                 this.defaultMenu = path;
-                console.log(this.defaultMenu);
-
                 this.routerChange(path);
                 this.emitClick(path, parentPath, menuItem);
             },
@@ -104,7 +112,9 @@
                     return;
                 }
                 let { parentPath, menuItem } = this.getCurrentMenuItem(path);
-                this.routerChange(path);
+                if (this.autoPush) {
+                    this.routerChange(path);
+                }
 
                 this.emitClick(path, parentPath, menuItem);
             },
@@ -134,11 +144,8 @@
                 if (path === this.$route.name) {
                     return;
                 }
-                if (path.indexOf('/') === -1) {
-                    this.$router.push({ name: path });
-                } else {
-                    this.$router.push(path);
-                }
+
+                this.$router.push({ name: path });
                 if (cb && typeof cb === 'function') {
                     cb();
                 }
@@ -162,11 +169,20 @@
     .sidebar-menu {
         position: relative;
         height: 100%;
-        // padding-bottom: 40px;
         box-sizing: border-box;
-        // background: #fff;
         overflow: hidden;
+        // background-image: linear-gradient(0deg, #fff 0%, #f0f4f8 100%);
         box-shadow: 2px 0 6px 0 rgba(6, 25, 41, 0.07);
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            height: 6px;
+            background-image: linear-gradient(0deg, #ffffff 0%, #f0f4f8 100%);
+        }
         .gem-sidebar-menu {
             position: relative;
             width: 210px;
@@ -202,6 +218,7 @@
                     height: 40px;
                     line-height: 40px;
                     padding-left: 48px !important;
+                    color: #61677a;
 
                     &:hover {
                         background: var(--elmenu-background);

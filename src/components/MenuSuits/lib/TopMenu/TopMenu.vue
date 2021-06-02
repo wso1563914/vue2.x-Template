@@ -84,8 +84,11 @@
         display: flex;
         width: 100%;
         height: 56px;
-        background: #131e27;
-        color: #fff;
+        background: #fff;
+        box-shadow: 0 2px 6px 0 rgba(158, 167, 180, 0.1);
+        color: #61677a;
+        // position: relative;
+        // z-index: 1;
         .logo-box {
             height: 100%;
             display: flex;
@@ -118,14 +121,14 @@
                     cursor: pointer;
                     text-align: center;
                     &.hover {
-                        color: #fff;
+                        color: #222;
                     }
                     &.active {
                         opacity: 1;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-
+                        color: #222;
                         span {
                             line-height: 50px;
                             font-weight: 700;
