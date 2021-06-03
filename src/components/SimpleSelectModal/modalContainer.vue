@@ -15,6 +15,10 @@
                     <el-button type="primary" @click="handleConfirm">{{ okText }}</el-button>
                 </div>
             </div>
+            <div class="footer" v-if="!hasSelectedCtrls">
+                <el-button @click="handleCancel">{{ cancelText }}</el-button>
+                <el-button type="primary" @click="handleConfirm">{{ okText }}</el-button>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -34,7 +38,7 @@
         computed: {
             hasSelectedCtrls() {
                 return 'selectedCtrls' in this.$scopedSlots;
-            }
+            },
         },
         props: {
             title: {
