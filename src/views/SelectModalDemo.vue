@@ -1,8 +1,6 @@
 <template>
     <select-modal
         v-model="selectedItems"
-        mode="tree-multi"
-        searchResultMode="tree-multi"
         searchMode="async"
         :treeAttrs="treeAttrs"
         :searchHandler="getSkillList"
@@ -11,7 +9,7 @@
 </template>
 <script lang="ts">
     import Vue from 'vue';
-    import { SelectModal } from '@/components/SelectModal';
+    import { SelectModal } from '@/components/SimpleSelectModal';
     import axios from 'axios';
     import { normalizeTree } from './treeNodeMapper';
     const netCtx = axios.create({
@@ -66,11 +64,11 @@
 <style lang="scss">
     .menu-tree-demo {
         // border: solid 1px ;
-        .parent-menu-title {
-            margin-left: -22px;
-            position: relative;
-            z-index: 1;
-            background-color: #fff;
-        }
+        // .parent-menu-title {
+        //     margin-left: -22px;
+        //     position: relative;
+        //     z-index: 1;
+        //     background-color: #fff;
+        // }
     }
 </style>
