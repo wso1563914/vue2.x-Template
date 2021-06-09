@@ -151,6 +151,11 @@
                     if (handlerPromise && handlerPromise.then) {
                         handlerPromise.then(data => {
                             // console.log('data source --- ', data);
+                            if (data && data.flatSource) {
+                                this.dataSource = data.data;
+                                this.resetSelectedItems(data.flatSource());
+                                return;
+                            }
                             this.dataSource = data;
                             this.resetSelectedItems(data);
                         });
@@ -162,6 +167,7 @@
                     // checkedList中的数据表示数据源dataSourece选中项的id集合，如果数据源dataSource被更换，checkedList（存放上一个dataSource的选中数据）需要被清除
                     const flag = nextDataSource.some(item => this.checkedList.indexOf(item.id) !== -1);
                     if (!flag) {
+                        // console.log('empty selected list , nextDataSource: %o, checkedList: %o', nextDataSource, this.checkedList);
                         this.$emit('on-select', []);
                     }
                 }

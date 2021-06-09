@@ -50,14 +50,28 @@
             async getSkillList(keyword) {
                 const resultPromise = netCtx.request({
                     method: 'get',
-                    url: '/manager/skill/list',
+                    url: '/manager/skill/list.do',
                     params: {
                         name: keyword,
                     },
                 });
                 return resultPromise.then(resp => {
                     const nextData = normalizeTree(resp.data.result, { toName: toMenuName, toChildren, toNodeKey });
-                    return Promise.resolve(nextData);
+
+                    const dataInfo = {
+                        data: nextData,
+                        flatSource() {
+                            const res = [];
+                            nextData.forEach(item => {
+                                res.push(item);
+                                item.children.forEach(subItem => {
+                                    res.push(subItem);
+                                });
+                            });
+                            return res;
+                        },
+                    };
+                    return Promise.resolve(dataInfo);
                 });
             },
         },
