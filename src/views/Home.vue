@@ -12,7 +12,7 @@
     import SelectModalDemo from './SelectModalDemo';
     @Component({
         components: {
-            SelectModalDemo
+            SelectModalDemo,
         },
     })
     export default class Home extends Vue {

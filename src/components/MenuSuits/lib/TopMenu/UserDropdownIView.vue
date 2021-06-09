@@ -2,20 +2,22 @@
     <!-- 顶部菜单右边的用户名和下拉抽屉 -->
     <Dropdown @on-click="dropDownClick" class="top-dropdown" transfer>
         <div class="username">
-            <img class="menu-user-head" :src="userInfo.img" :onerror="defaultAvater" />
+            <img class="menu-user-head" :src="avaSrc" />
             <span>{{ userInfo.name }}</span>
         </div>
         <DropdownMenu slot="list" class="top-dropdown-menu">
             <DropdownItem class="dr-photo" v-if="userInfo.phone">{{ userInfo.phone }}</DropdownItem>
             <template v-if="commandList.length > 0">
                 <DropdownItem class="dr-normal" v-for="(item, i) in commandList" :key="i" :name="item.command">
-                    <img :src="item.icon" :onerror="defaultIcon" />
+                    <!-- <slot name="commandIcon" v-if="item.isFont"></slot> -->
+                    <i :class="[item.icon, 'ic']" v-if="item.isFont"></i>
+                    <img :src="getIconSrc(item)" v-else />
                     <span>{{ item.name }}</span>
                 </DropdownItem>
             </template>
 
             <DropdownItem class="dr-out" name="logout">
-                <img src="./icon/exit.png" alt="" />
+                <img :src="exitIconSrc" />
                 <span>退出登录</span>
             </DropdownItem>
         </DropdownMenu>
@@ -27,19 +29,29 @@
     //     name: string;
     //     icon: string;
     //     command: string;
+    //     isFont: Boolean; // 是否用iconfont， 用iconfont的需要自己在外部用slot=commandIcon的插槽添加
     // }
     // interface UserInfoItem {
     //     name: '',
     //     phone: '',
     //     img: '',
     // }
+    import defaultAva from './icon/avater.png';
+    import defaultPh from './icon/placeholder.png';
+    import exitIcon from './icon/exit.png';
+
     export default {
         name: 'UserDropdown',
-        data() {
-            return {
-                defaultAvater: `this.src="${require('./icon/avater.png')}";this.onerror=null`,
-                defaultIcon: `this.src="${require('./icon/placeholder.png')}";this.onerror=null`,
-            };
+        computed: {
+            avaSrc() {
+                return this.userInfo.img ? this.userInfo.img : defaultAva;
+            },
+            exitIconSrc() {
+                return exitIcon;
+            },
+            placeholderSrc() {
+                return defaultPh;
+            },
         },
         props: {
             userInfo: {
@@ -61,6 +73,9 @@
             dropDownClick(command) {
                 this.$emit('click', command);
             },
+            getIconSrc(item) {
+                return item.icon ? item.icon : defaultPh;
+            },
         },
     };
 </script>
@@ -77,7 +92,7 @@
             align-items: center;
             height: 100%;
             cursor: default;
-            color: #fff;
+            color: #61677a;
             .menu-user-head {
                 width: 20px;
                 height: 20px;
@@ -106,6 +121,10 @@
             color: #61677a;
             padding: 12px 12px;
             // margin-bottom: 12px;
+            .ic {
+                margin-right: 8px;
+                color: #61677a;
+            }
         }
         .dr-out {
             padding: 11px 12px;

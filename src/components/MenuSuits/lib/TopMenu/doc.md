@@ -73,6 +73,7 @@ v-model="路由的name"
             name: '联系我们',
             icon: 'iconlianxi2x',
             command: 'linkUs',
+            isFont: false // 是否用iconfont， 用iconfont的需要自己在外部用slot=commandIcon的插槽添加
         },
     ];
 
