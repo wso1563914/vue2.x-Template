@@ -3,3 +3,4 @@ vue.config.js
 prettierrc.js
 babel.config.js
 src/assets/*
+src/third/*

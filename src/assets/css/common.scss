@@ -93,40 +93,6 @@
 .p-underline{
     text-decoration: underline;
 }
-/*副侧边栏collapse组件样式修改*/
-.p-nav-collapse{
-    border: 0;
-    .el-collapse-item{
-        .el-collapse-item__header{
-            height: 40px;
-            border-bottom: 0;
-            box-sizing: border-box;
-            border-right: 2px solid transparent;
-            font-size: 14px;
-            color: $regular-text;
-            // &.is-active{
-            //     color: $default-color;
-            //     border-color: $default-color;
-            //     .el-collapse-item__arrow{
-            //         color: $regular-text;
-            //     }
-            // }
-        }
-        .el-collapse-item__wrap{
-            border: 0;
-            .el-collapse-item__content{
-                padding-bottom: 0;
-                padding-top: 10px;
-            }
-        }
-    }
-    .collapse-item{
-        height: 40px;
-        line-height: 40px;
-        font-size: 14px;
-        color: $regular-text;
-    }
-}
 
 .el-button+.el-button {
     margin-left: 24px;

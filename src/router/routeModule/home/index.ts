@@ -9,6 +9,21 @@ export default [
                 name: 'home',
                 component: () => import('@/views/Home.vue'),
             },
+            {
+                path: '/personnelTrack',
+                name: 'personnelTrack',
+                component: () => import('@/views/personnelTrack.vue'),
+            },
+            {
+                path: '/peopleDynamics',
+                name: 'peopleDynamics',
+                component: () => import('@/views/peopleDynamics.vue'),
+            },
+            {
+                path: '/scheduleIndex',
+                name: 'scheduleIndex',
+                component: () => import('@/views/scheduleIndex.vue'),
+            },
         ],
     },
 ];
