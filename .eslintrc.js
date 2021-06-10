@@ -45,7 +45,8 @@ module.exports = {
         'no-extend-native': 2, //禁止扩展native对象
         'no-extra-bind': 2, //禁止不必要的函数绑定
         'no-extra-boolean-cast': 2, //禁止不必要的bool转换
-        'no-extra-parens': 2, //禁止非必要的括号
+        'no-extra-parens': 0, //禁止非必要的括号
+        '@typescript-eslint/no-extra-parens': 2,
         'no-extra-semi': 2, //禁止多余的冒号
         'no-floating-decimal': 2, //禁止省略浮点数中的0 .5 3.
         'no-func-assign': 2, //禁止重复的函数声明
@@ -101,7 +102,7 @@ module.exports = {
         'no-trailing-spaces': 1, //一行结束后面不要有空格
         'no-this-before-super': 0, //在调用super()之前不能使用this或super
         'no-throw-literal': 2, //禁止抛出字面量错误 throw "error";
-        'no-undef': 1, //不能有未定义的变量
+        'no-undef': 0, //不能有未定义的变量
         'no-undef-init': 2, //变量初始化时不能直接给它赋值为undefined
         'no-undefined': 1, //不能使用undefined
         'no-unexpected-multiline': 2, //避免多行表达式
@@ -109,8 +110,8 @@ module.exports = {
         'no-unneeded-ternary': 2, //禁止不必要的嵌套 var isYes = answer === 1 ? true : false;
         'no-unreachable': 2, //不能有无法执行的代码
         'no-unused-expressions': 2, //禁止无用的表达式
-        'no-unused-vars': [2, { vars: 'all', args: 'after-used' }], //不能有声明后未被使用的变量或参数
-        'no-use-before-define': 2, //未定义前不能使用
+        'no-unused-vars': [1, { vars: 'all', args: 'after-used' }], //不能有声明后未被使用的变量或参数
+        'no-use-before-define': 1, //未定义前不能使用
         'no-useless-call': 2, //禁止不必要的call和apply
         'no-void': 2, //禁用void操作符
         'no-var': 0, //禁用var，用let和const代替
@@ -132,7 +133,7 @@ module.exports = {
         complexity: [0, 20], //循环复杂度
         'computed-property-spacing': [0, 'never'], //是否允许计算后的键名什么的
         'consistent-return': 0, //return 后面是否允许省略
-        'consistent-this': [2, 'that'], //this别名
+        'consistent-this': 0, //this别名
         'constructor-super': 2, //非派生类不能调用super，派生类必须调用super
         curly: [2, 'all'], //必须使用 if(){} 中的{}
         'dot-location': 0, //对象访问符的位置，换行的时候在行首还是行尾
@@ -159,7 +160,7 @@ module.exports = {
         'newline-after-var': 0, //变量声明后是否需要空一行
         'object-curly-spacing': [0, 'never'], //大括号内是否允许不必要的空格
         'object-shorthand': 0, //强制对象字面量缩写语法
-        'one-var': 1, //连续声明
+        'one-var': 0, //连续声明
         'operator-assignment': [0, 'always'], //赋值运算符 += -=什么的
         'operator-linebreak': [0, 'after'], //换行时运算符在行尾还是行首
         'padded-blocks': 0, //块语句内行首行尾是否要空行
@@ -190,9 +191,10 @@ module.exports = {
         'wrap-iife': [2, 'inside'], //立即执行函数表达式的小括号风格
         'wrap-regex': 0, //正则表达式字面量用小括号包起来
         yoda: [2, 'never'], //禁止尤达条件
-        '@typescript-eslint/no-explicit-any': 1,
+        '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/no-empty-function': 1,
         '@typescript-eslint/camelcase': 0, // 强制驼峰
+        '@typescript-eslint/explicit-module-boundary-types': 0,
         'class-methods-use-this': 0, // 在类的非静态方法中，必须存在对 this 的引用
     },
 };

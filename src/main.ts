@@ -9,14 +9,20 @@ import store from './store';
 import './assets/iconfont/iconfont.js';
 import './assets/iconfont/iconfont.css';
 
-// import SidebarMenu from '@/third/sidebarMenu/sidebar-menu.umd';
-// import SidebarMenu from 'lib';
-
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.config.productionTip = false;
-// Vue.use(SidebarMenu);
-// Vue.use(SidebarMenu);
+
+// 在页面加载时读取sessionStorage里的状态信息
+if (sessionStorage.getItem('vuexStore')) {
+    let vxs: Obj = JSON.parse(sessionStorage.getItem('vuexStore') as string);
+    store.replaceState(Object.assign({}, store.state, vxs));
+}
+
+// 在页面刷新时将vuex里的信息保存到sessionStorage里
+window.addEventListener('pagehide', () => {
+    window.sessionStorage.setItem('vuexStore', JSON.stringify(store.state));
+});
 
 new Vue({
     router,

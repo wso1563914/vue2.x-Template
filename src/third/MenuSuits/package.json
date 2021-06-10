@@ -1,0 +1,20 @@
+{
+  "name": "gem-menusuits",
+  "version": "0.0.16",
+  "description": "后台系统的顶部菜单和侧边菜单套装",
+  "keywords": [
+    "topMenu",
+    "sideMenu"
+  ],
+  "author": "chenzhixia <chenzhixia@gemdale.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib",
+    "src"
+  ]
+}

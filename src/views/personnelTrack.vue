@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="personnel-track">
         personnelTrack
         <el-button @click="push">to ScheduleIndex</el-button>
     </div>
@@ -15,4 +15,10 @@
     }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+    .personnel-track {
+        background: #fff;
+        height: 100%;
+        padding: 16px 18px;
+    }
+</style>
