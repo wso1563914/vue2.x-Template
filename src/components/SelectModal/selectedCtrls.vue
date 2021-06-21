@@ -1,6 +1,6 @@
 <template>
     <div class="selected-ctrls">
-        <p class="title">已选项目</p>
+        <p class="title">{{ parentProps.selectedCtrlsTitle }}</p>
         <template v-if="mode === 'multi' || mode === 'tree-multi'">
             <el-checkbox
                 checked

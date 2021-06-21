@@ -107,6 +107,11 @@
                     return {};
                 },
             },
+            // selected ctrls title
+            selectedCtrlsTitle: {
+                type: String,
+                default: '已选项目',
+            },
         },
         methods: {
             handleSelectBarClick(toggleVisible, onSelect) {

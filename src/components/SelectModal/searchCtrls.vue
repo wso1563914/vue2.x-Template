@@ -121,7 +121,6 @@
             selectedList: {
                 immediate: true,
                 handler(nextVal) {
-                    console.log('selected list ---', nextVal);
                     const checkedKeys = Array.isArray(nextVal) ? nextVal.map(item => item.id) : [];
                     if (this.mode === 'tree-multi') {
                         const { treeMultiRef } = this.$refs;
@@ -167,7 +166,6 @@
                     // checkedList中的数据表示数据源dataSourece选中项的id集合，如果数据源dataSource被更换，checkedList（存放上一个dataSource的选中数据）需要被清除
                     const flag = nextDataSource.some(item => this.checkedList.indexOf(item.id) !== -1);
                     if (!flag) {
-                        // console.log('empty selected list , nextDataSource: %o, checkedList: %o', nextDataSource, this.checkedList);
                         this.$emit('on-select', []);
                     }
                 }
@@ -183,6 +181,10 @@
                     const handlerPromise = searchHandler(this.searchText);
                     if (handlerPromise && handlerPromise.then) {
                         handlerPromise.then(data => {
+                            if (data && data.flatSource) {
+                                this.searchResults = data.data;
+                                return;
+                            }
                             this.searchResults = data;
                         });
                     }

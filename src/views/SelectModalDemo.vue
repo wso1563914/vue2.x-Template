@@ -7,6 +7,7 @@
         :treeAttrs="treeAttrs"
         :searchHandler="getSkillList"
         :placeholder="placeholder"
+        selectedCtrlsTitle="选中技能"
     />
 </template>
 <script lang="ts">
