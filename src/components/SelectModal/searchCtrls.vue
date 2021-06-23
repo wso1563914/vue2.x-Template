@@ -146,7 +146,7 @@
             getDataSource() {
                 const searchHandler = this.parentProps.searchHandler;
                 if (searchHandler) {
-                    const handlerPromise = searchHandler(this.searchText);
+                    const handlerPromise = searchHandler();
                     if (handlerPromise && handlerPromise.then) {
                         handlerPromise.then(data => {
                             // console.log('data source --- ', data);
