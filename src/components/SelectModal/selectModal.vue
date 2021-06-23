@@ -1,5 +1,5 @@
 <template>
-    <SelectModal @on-ok="handleOk" @on-cancel="handleCancel">
+    <SelectModal @on-ok="handleOk" @on-cancel="handleCancel" :dialogAttrs="dialogAttrs">
         <template v-slot:trigger="scope">
             <SelectBar
                 :placeholder="placeholder.selectBar"
@@ -111,6 +111,12 @@
             selectedCtrlsTitle: {
                 type: String,
                 default: '已选项目',
+            },
+            dialogAttrs: {
+                type: Object,
+                default() {
+                    return {};
+                },
             },
         },
         methods: {

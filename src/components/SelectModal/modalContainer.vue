@@ -3,7 +3,7 @@
         <div class="selected-items">
             <slot name="trigger" v-bind="{ selectedItems, toggleVisible, onSelect: this.handleSelectChange }" />
         </div>
-        <el-dialog class="select-dialog" width="1000px" :visible.sync="visible" :show-close="false">
+        <el-dialog class="select-dialog" width="1000px" :visible.sync="visible" :show-close="false" v-bind="dialogAttrs">
             <template v-slot:title>
                 <p class="title">{{ title }}<i class="el-icon-close" @click="handleCancel"></i></p>
             </template>
@@ -54,6 +54,12 @@
                 type: Function,
                 default() {
                     return () => Promise.resolve([]);
+                },
+            },
+            dialogAttrs: {
+                type: Object,
+                default() {
+                    return {};
                 },
             },
         },
