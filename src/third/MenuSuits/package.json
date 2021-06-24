@@ -1,6 +1,6 @@
 {
   "name": "gem-menusuits",
-  "version": "0.0.16",
+  "version": "0.0.23",
   "description": "后台系统的顶部菜单和侧边菜单套装",
   "keywords": [
     "topMenu",
@@ -16,5 +16,6 @@
   "files": [
     "lib",
     "src"
-  ]
+  ],
+  "gitHead": "b264938da6852cfc5e04400f734a784e6110ce81"
 }

@@ -7,7 +7,7 @@
       class="gem-sidebar-menu"
       @on-select="handleSelect"
       width="210px"
-      accordion
+      :accordion="accordion"
     >
       <Submenu v-for="(item, i) in menuList" :key="i" :name="item.name">
         <template slot="title">
@@ -82,6 +82,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    accordion: {
+      type: Boolean,
+      default: true,
+    },
     activeTextColor: String,
     activeBg: String,
     autoPush: {
@@ -104,14 +108,16 @@ export default {
     let path = this.defaultActiveMenu
       ? this.defaultActiveMenu
       : this.$route.name;
-    this.defaultMenu = path;
     this.initMenu(path);
   },
   methods: {
     initMenu(path) {
       let { parentPath, menuItem } = this.getCurrentMenuItem(path);
+      this.defaultMenu = path;
       this.updateOpen(parentPath);
-      this.routerChange(path);
+      if (this.autoPush) {
+        this.routerChange(path);
+      }
       // replace 'click' event with 'init-menu'
       // this.emitClick(path, parentPath, menuItem);
       this.$emit("init-menu", { path, parentPath, menuItem });
@@ -133,8 +139,10 @@ export default {
     updateOpen(parentPath) {
       this.openName = [parentPath];
       this.$nextTick(() => {
-        this.$refs.menuRef.updateOpened();
-        this.$refs.menuRef.updateActiveName();
+        if (this.$refs.menuRef) {
+          this.$refs.menuRef.updateOpened();
+          this.$refs.menuRef.updateActiveName();
+        }
       });
     },
 
@@ -204,7 +212,7 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
+      right: 1px;
       z-index: 3;
       height: 6px;
       background-image: linear-gradient(0deg, #ffffff 0%, #f0f4f8 100%);
@@ -260,6 +268,7 @@ export default {
           font-weight: 700;
         }
       }
+
       .ivu-menu-item-active:not(.ivu-menu-submenu):after {
         width: 0;
       }

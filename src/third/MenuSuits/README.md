@@ -4,9 +4,15 @@ npm i gem-menusuits
 ## Usage
 
 ```
-import SiderbarMenu form 'gem-pub-lib/MenuSuits/lib/SideBar/siderbarMenu.js'
-Vue.use(SidebarMenu);
-
+import { SideBarIView } from 'gem-menusuits/lib/SideBarIView'
+import { TopMenu, UserDropdown } from 'gem-menusuits/lib/SideBarIView'
+export default {
+    components: {
+        SideBarIView,
+        TopMenu,
+        UserDropdown
+    },
+}
 其他一样引入
 
 ```

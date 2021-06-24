@@ -9,7 +9,7 @@
     export default class App extends Vue {}
 </script>
 <style lang="scss">
-    @import '~@/assets/css/reset.scss';
+    @import '@/assets/css/reset.scss';
     html,
     body {
         width: 100%;

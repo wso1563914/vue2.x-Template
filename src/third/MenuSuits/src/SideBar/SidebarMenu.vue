@@ -7,11 +7,10 @@
       :collapse="isCollapse"
       :router="false"
       :active-text-color="activeTextColor"
-      text-color="#61677A"
       @select="handleSelect"
-      unique-opened
+      :unique-opened="accordion"
     >
-      <el-submenu v-for="(item, i) in menuList" :key="i" :index="item.name">
+      <el-submenu v-for="item in menuList" :key="item.name" :index="item.name">
         <template slot="title">
           <!-- 图片是iconfont的图片,UI出图，后台配置 -->
           <i
@@ -26,8 +25,8 @@
           <span slot="title">{{ item.title }}</span>
         </template>
         <el-menu-item
-          v-for="(el, j) in item.children"
-          :key="j"
+          v-for="el in item.children"
+          :key="el.name"
           :index="el.name"
         >
           <span slot="title">{{ el.title }}</span>
@@ -87,6 +86,10 @@ export default {
     menuList: {
       type: Array,
       default: () => [],
+    },
+    accordion: {
+      type: Boolean,
+      default: true,
     },
     activeTextColor: String,
     activeBg: String,
@@ -229,6 +232,7 @@ export default {
       .el-submenu__title {
         height: 50px;
         line-height: 50px;
+        color: #61677a;
       }
     }
     .el-submenu__title:hover {

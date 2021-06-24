@@ -16,6 +16,8 @@ menuList: 二级菜单数组
 
 defaultActiveMenu: String 默认高亮的菜单的name
 
+accordion: 是否手风琴模式
+
 active-text-color：String 选中字的颜色
 
 active-bg: String 选中菜单的背景色

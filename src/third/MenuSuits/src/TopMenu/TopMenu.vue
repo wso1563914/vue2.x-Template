@@ -121,14 +121,14 @@
                     cursor: pointer;
                     text-align: center;
                     &.hover {
-                        color: #222;
+                        color: #1C9BFF;
                     }
                     &.active {
                         opacity: 1;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        color: #222;
+                        color: #1C9BFF;
                         span {
                             line-height: 50px;
                             font-weight: 700;
@@ -138,7 +138,7 @@
             }
         }
         .info-box {
-            min-width: 200px;
+            // min-width: 200px;
             height: 100%;
             padding: 0 24px;
             display: flex;
