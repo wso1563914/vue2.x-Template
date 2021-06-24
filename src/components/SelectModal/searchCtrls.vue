@@ -129,12 +129,6 @@
                             treeMultiRef.setCheckedKeys(checkedKeys);
                         }
                     }
-                    if (this.parentProps.searchResultMode === 'tree-multi') {
-                        const { resTreeMultiRef } = this.$refs;
-                        if (resTreeMultiRef) {
-                            resTreeMultiRef.setCheckedKeys(checkedKeys);
-                        }
-                    }
                 },
             },
         },
