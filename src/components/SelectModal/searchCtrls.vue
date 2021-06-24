@@ -29,6 +29,7 @@
                     :data="searchResults"
                     show-checkbox
                     node-key="id"
+                    :default-checked-keys="checkedList"
                     @check-change="handleClickSearchItem"
                     v-bind="parentProps.treeAttrs"
                 ></el-tree>
