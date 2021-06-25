@@ -165,7 +165,7 @@
                     }
                 }
             },
-            handleSearch() {
+            async handleSearch() {
                 const searchMode = this.parentProps.searchMode;
                 const searchHandler = this.parentProps.searchHandler;
                 if (searchMode === 'sync') {
@@ -173,15 +173,9 @@
                     // console.log('search results ---', results);
                     this.searchResults = results;
                 } else if (searchMode === 'async' && searchHandler) {
-                    const handlerPromise = searchHandler(this.searchText);
-                    if (handlerPromise && handlerPromise.then) {
-                        handlerPromise.then(data => {
-                            if (data && data.flatSource) {
-                                this.searchResults = data.data;
-                                return;
-                            }
-                            this.searchResults = data;
-                        });
+                    const result = await searchHandler(this.searchText);
+                    if (result && result.flatSource) {
+                        this.searchResults = result.data;
                     }
                 }
                 this.showResults = true;
