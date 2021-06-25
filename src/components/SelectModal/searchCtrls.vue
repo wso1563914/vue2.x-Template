@@ -185,6 +185,19 @@
                     }
                 }
                 this.showResults = true;
+
+                this.$nextTick(() => {
+                    this.oldSelectedList = []; // 存储选择的旧值
+                    let currentKey = this.$refs.resTreeMultiRef.getCheckedKeys() || [];
+                    if (currentKey.length != this.checkedList.length) {
+                        // 之前选中的值不在搜索列表中
+                        for (let checkedId of this.checkedList) {
+                            if (currentKey.indexOf(checkedId) == -1) {
+                                this.oldSelectedList.push(...this.selectedList.filter(item => item.id == checkedId));
+                            }
+                        }
+                    }
+                });
             },
             handleCheckChange(nextItem) {
                 // console.log('next checked items ---',items);
@@ -218,7 +231,8 @@
                     }
                 } else if (searchResultMode === 'tree-multi') {
                     const checkedItems = this.$refs.resTreeMultiRef.getCheckedNodes();
-                    this.$emit('on-select', checkedItems);
+
+                    this.$emit('on-select', this.oldSelectedList.concat(checkedItems));
                 }
             },
             handleOutsideClickClose(env) {
