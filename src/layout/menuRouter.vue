@@ -1,7 +1,7 @@
 <template>
     <!-- 带有顶部和侧边菜单的Router -->
     <div class="gem-container">
-        <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @on-menu-click="topMenuClick" :logo="img">
+        <TopMenu :topMenuList="menuArr" :actived="topActiveMenu" @on-menu-click="topMenuClick" :logo="img1">
             <UserDropdown slot="otherIcon" :userInfo="userInfo" :commandList="commandList" @click="commandClick"></UserDropdown>
         </TopMenu>
         <main>
@@ -23,12 +23,14 @@
 </template>
 
 <script lang="ts">
-    import { TopMenu, UserDropdown } from '@/third/MenuSuits/lib/TopMenu/index.js';
-    import { SidebarMenu } from '@/third/MenuSuits/lib/SideBar/index.js';
+    import TopMenu from '@/third/MenuSuits/src/TopMenu/TopMenu.vue';
+    import UserDropdown from '@/third/MenuSuits/src/TopMenu/UserDropdown.vue';
+    import SidebarMenu from '@/third/MenuSuits/src/SideBar/SidebarMenu.vue';
     import { State, Mutation } from 'vuex-class';
     import { Component, Vue } from 'vue-property-decorator';
 
     import menuList from '@/menu.js';
+    import img1 from '@/assets/images/logo.png';
 
     @Component({
         components: {
@@ -49,7 +51,8 @@
         sidebarMenuList: any = [];
         isShowSidebarMenu = false;
 
-        img: any = require('../assets/images/logo.png');
+        // img: any = require('../assets/images/logo.png');
+        img: any = img1;
 
         get topActiveMenu() {
             return this.defaultTopMenu;
@@ -95,18 +98,18 @@
                 };
 
                 this.commandList = [
-                    {
-                        name: '联系我们',
-                        icon: 'iconfont iconlianxi2x',
-                        command: 'linkUs',
-                        isFont: true,
-                    },
-                    {
-                        name: '联系我们2',
-                        icon: 'iconfont iconxiaozhang2x',
-                        command: 'linkUs2',
-                        isFont: true,
-                    },
+                    // {
+                    //     name: '联系我们',
+                    //     icon: 'iconfont iconlianxi2x',
+                    //     command: 'linkUs',
+                    //     isFont: true,
+                    // },
+                    // {
+                    //     name: '联系我们2',
+                    //     icon: 'iconfont iconxiaozhang2x',
+                    //     command: 'linkUs2',
+                    //     isFont: true,
+                    // },
                 ];
 
                 this.getFirstTopMenu(this.menuArr);

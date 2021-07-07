@@ -1,3 +1,3 @@
-var SideBar = require('./SideBar');
+var SidebarMenu = require('./SideBar');
 require('./SideBar.css');;
-module.exports = SideBar;
+module.exports = SidebarMenu;

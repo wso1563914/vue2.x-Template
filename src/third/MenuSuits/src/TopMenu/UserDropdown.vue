@@ -38,7 +38,8 @@
     // }
     import defaultAva from './icon/avater.png';
     import defaultPh from './icon/placeholder.png';
-    import exitIcon from './icon/exit.png';
+    // import exitIcon from './icon/exit.png';
+    import exitIcon from './icon/exit.svg';
 
     export default {
         name: 'UserDropdown',

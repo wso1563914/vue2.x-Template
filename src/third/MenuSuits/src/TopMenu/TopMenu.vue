@@ -117,7 +117,6 @@
                     font-size: 16px;
                     line-height: 50px;
                     height: 50px;
-                    opacity: 0.6;
                     cursor: pointer;
                     text-align: center;
                     &.hover {

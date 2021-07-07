@@ -113,9 +113,10 @@ export default {
   methods: {
     initMenu(path) {
       let { parentPath, menuItem } = this.getCurrentMenuItem(path);
-      this.defaultMenu = path;
-      this.updateOpen(parentPath);
+
       if (this.autoPush) {
+        this.defaultMenu = path;
+        this.updateOpen(parentPath);
         this.routerChange(path);
       }
       // replace 'click' event with 'init-menu'
@@ -217,6 +218,9 @@ export default {
       height: 6px;
       background-image: linear-gradient(0deg, #ffffff 0%, #f0f4f8 100%);
     }
+    &::after {
+      width: 0px;
+    }
     // margin-top: 10px;
 
     .ivu-menu-submenu {
@@ -239,6 +243,9 @@ export default {
     }
     .ivu-menu-submenu-title:hover {
       background: var(--elmenu-background);
+      .ivu-menu-submenu-title-icon {
+        color: var(--elmenu-active-text-color);
+      }
     }
     .menuicon {
       margin-right: 8px;

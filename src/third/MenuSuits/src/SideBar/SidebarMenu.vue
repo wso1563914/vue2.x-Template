@@ -120,8 +120,8 @@ export default {
   methods: {
     initMenu(path) {
       let { parentPath, menuItem } = this.getCurrentMenuItem(path);
-      this.defaultMenu = path;
       if (this.autoPush) {
+        this.defaultMenu = path;
         this.routerChange(path);
       }
       //   this.emitClick(path, parentPath, menuItem);
@@ -237,6 +237,9 @@ export default {
     }
     .el-submenu__title:hover {
       background: var(--elmenu-background);
+      .el-submenu__icon-arrow {
+        color: var(--elmenu-active-text-color);
+      }
     }
     .menuicon {
       font-size: 16px;
