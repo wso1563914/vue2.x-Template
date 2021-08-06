@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import '@/assets/css/browser-color.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
 import 'iview/dist/styles/iview.css';
@@ -8,20 +9,24 @@ import iView from 'iview';
 import store from './store';
 import './assets/iconfont/iconfont.js';
 import './assets/iconfont/iconfont.css';
+import demoBlock from './components/demo-block.vue';
+import SideNav from './components/side-nav.vue';
+import MainHeader from './components/header.vue';
+import hljs from 'highlight.js';
 
 Vue.use(ElementUI);
 Vue.use(iView);
+Vue.component('demo-block', demoBlock);
+Vue.component('side-nav', SideNav);
+Vue.component('main-header', MainHeader);
+
 Vue.config.productionTip = false;
 
-// 在页面加载时读取sessionStorage里的状态信息
-if (sessionStorage.getItem('vuexStore')) {
-    let vxs: Obj = JSON.parse(sessionStorage.getItem('vuexStore') as string);
-    store.replaceState(Object.assign({}, store.state, vxs));
-}
-
-// 在页面刷新时将vuex里的信息保存到sessionStorage里
-window.addEventListener('pagehide', () => {
-    window.sessionStorage.setItem('vuexStore', JSON.stringify(store.state));
+router.afterEach(() => {
+    Vue.nextTick(() => {
+        const blocks = document.querySelectorAll('pre code:not(.hljs)');
+        Array.prototype.forEach.call(blocks, hljs.highlightBlock);
+    });
 });
 
 new Vue({

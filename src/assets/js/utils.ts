@@ -1,10 +1,3 @@
-import Vue from 'vue';
-import http from './http/axios';
-// import store from '#/store/store';
-import router from '@/router/index';
-// declare var BMap: any;
-
-let v = new Vue();
 
 class Utils {
     // 时间格式化
@@ -150,11 +143,6 @@ class Utils {
         return timeStr;
     };
 
-    // 新窗口打开页面
-    openNewWindow = (routeParams) => {
-        const { href } = router.resolve(routeParams);
-        window.open(href);
-    }
     // 对象合并赋值，根据a对象（被赋值对象）的key值从b对象取值, defaultValue默认值
     objectAssign = function(a: object, b: object, defaultValue?: any) {
         for (const key in a) {
@@ -193,40 +181,6 @@ class Utils {
             }, 1000);
         });
     }
-    // 判断是否有创建权限
-    getEnableMdm(groupId: string) {
-        return new Promise((resolve, reject) => {
-            http({
-                method: 'get',
-                url: 'auth/sysGroup/findEnableMdm',
-                params: { groupId },
-            })
-                .then((res: any) => {
-                    if (res.code === 0) {
-                        if (res.data === 0) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
-                        }
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        });
-    }
-    /**
-     * 判断是否含有权限
-     */
-    hasPermission = function(params: string): boolean {
-        let bool = false;
-        // store.state.permission.map((item) => {
-        //     if (item.permUrl === params) {
-        //         bool = true;
-        //     }
-        // });
-        return bool;
-    };
 
     // 获取本月起始和结束日期
     /**
@@ -350,59 +304,6 @@ class Utils {
             return (Math.round(a * 100 + b * 100) / 100).toFixed(2);
         }
     };
-
-    /**
-     * 函数防抖
-     */
-    // debounce = function(func: () => void, wait: number, immediate: boolean) {
-    //     let timeout: any;
-    //     return function() {
-    //         let context = this;
-    //         let args = arguments;
-    //         if (timeout) {
-    //             clearTimeout(timeout);
-    //         }
-    //         if (immediate) {
-    //             let callNow = !timeout;
-    //             timeout = setTimeout(() => {
-    //                 timeout = null;
-    //             }, wait);
-    //             if (callNow) {
-    //                 func.apply(context, args);
-    //             }
-    //         } else {
-    //             timeout = setTimeout(function() {
-    //                 func.apply(context, args);
-    //             }, wait);
-    //         }
-    //     };
-    // };
-    /**
-     * 函数节流
-     */
-    // throttle(fn: () => void, delay: number, atleast: number) {
-    //     let timer = null;
-    //     let previous = null;
-    //     return function() {
-    //         let context = this;
-    //         let args = arguments;
-    //         let now = +new Date();
-    //         if (!previous) {
-    //             previous = now;
-    //         }
-    //         if (atleast && now - previous > atleast) {
-    //             fn.apply(context, args);
-    //             previous = now;
-    //             clearTimeout(timer);
-    //         } else {
-    //             clearTimeout(timer);
-    //             timer = setTimeout(() => {
-    //                 fn.apply(context, args);
-    //                 // previous = null
-    //             }, delay);
-    //         }
-    //     };
-    // }
     /**
      * 计算某日期的n月之后的日期
      * startTime: 指定日期
@@ -581,14 +482,6 @@ export interface UtilsInstace {
     parseHeight(height: number | string): any;
     numSub(a: number, b: number): number;
     numAdd(a: number, b: number, c?: number): number;
-    /**
-     * 函数防抖
-     */
-    // debounce(func: () => void, wait: number, immediate: boolean): any;
-    /**
-     * 函数节流
-     */
-    // throttle(fn: () => void, delay: number, atleast: number): () => void;
     objectAssignArr(a: object, b: object, vue: any): any;
     interval(fn: any, intervalTime: number): any;
     getEnableMdm(groupId: string): any;

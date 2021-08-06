@@ -18,6 +18,7 @@ module.exports = {
     assetsDir: 'static',
     productionSourceMap: false,
     runtimeCompiler: true,
+    lintOnSave: false,
     devServer: {
         port: 8010,
         proxy: {
@@ -54,6 +55,24 @@ module.exports = {
         config.resolve.alias
             .set('@', resolve('src'))
             .set('publib', resolve('/node_modules/gem-pub-lib/packages'))
+            .set('@doc', resolve('src/docs'))
+
+
+
+        config.module.rule('md')
+            .test(/\.md$/)
+            // .include.add(/src/)
+            // .end()
+            .use('vue-loader')
+            .loader('vue-loader')
+            .options({
+                compilerOptions: {
+                    preserveWhitespace: false
+                }
+            })
+            .end()
+            .use('md-loader')
+            .loader(resolve('./doc-build/md-loader/index.js'))
 
         // 自动引入scss
         const types = ['vue-modules', 'vue', 'normal-modules', 'normal']

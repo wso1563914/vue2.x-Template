@@ -1,283 +1,156 @@
-@import './elmentUi-reset.scss';
-[v-cloak] {
-    display: none;
-}
-
-.p-clearfix:after {
-    content: "";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-.gem-flex-1{
-    flex: 1;
-}
-/*element样式*/
-.gem-table{
-    border: 1px solid $border-base;
-    border-bottom: 0;
-}
-.gem-pagination{
-    text-align: right;
-    padding: 12px;
-    width: 100%;
-    box-sizing: border-box;
-}
-/*flex布局常用*/
-.gem-flex-center{
-    @include flex(center, center);
-    width: 100%;
-    box-sizing: border-box;
-}
-.gem-flex-start-center{
-    @include flex(flex-start, center);
-    box-sizing: border-box;
-}
-.gem-flex-sb-center{
-    @include flex(space-between, center);
-    width: 100%;
-    box-sizing: border-box;
-}
-.gem-flex-sb-start{
-    @include flex(space-between, flex-start);
-}
-.gem-flex{
-    @include flex;
-}
-.gem-flexD{
-    @include flexD;
-}
-.gem-flex-wrap{
-    flex-wrap: wrap;
-}
-.gem-float-l{
-    float: left;
-}
-.gem-float-r{
-    float: right;
-}
-.p-border-radio-4{
-    border-radius: 4px;
-}
-/*常用title标题样式*/
-.gem-title{
-    font-size: 16px;
-    font-weight: bold;
-    color: $primary-text;
-    line-height: 22px;
-    padding: 16px 24px;
-}
-/*粗体*/
-.p-bold{
-    font-weight: bold;
-}
-
-.p-color-ff4{
-    color: $negative-color;
-}
-.gem-text-align-r{
-    text-align: right;
-}
-.gem-text-align-c{
-    text-align: center;
-}
-/*鼠标手*/
-.gem-pointer{
-    cursor: pointer;
-    &:active{
-        opacity: 0.6;
-    }
-}
-/*下划线*/
-.p-underline{
-    text-decoration: underline;
-}
-
-.el-button+.el-button {
-    margin-left: 24px;
-}
-
-.el-form-item {
-    margin-bottom: 16px;
-    &.is-error{
-        margin-bottom: 24px;
-    }
-}
-.flex-box {
-    @include flexD;
+#app {
     height: 100%;
-}
-.flex-row {
-    @include flex(flex-start, center);
-}
-.p-content-part{
-    @include flexD(space-between, center);
-    padding: 0 24px;
-    overflow: auto;
-}
-.gem-float-r {
-    float: right;
-}
-//必输必选关键字
-.p-color-star{
-    color: $negative-color;
-}
-// 滚动条
-::-webkit-scrollbar{
-    width: 6px;
-}
-::-webkit-scrollbar-thumb{
-    border-radius: 10px;
-    background-color: rgba(144,147,153,.3);
-}
-::-webkit-scrollbar:horizontal{
-    height: 6px;
-}
+    background: #fff;
 
-// 对不能选择的多选框的勾勾加深颜色
-.el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
-    background: #C0C7D0;
-    &:after {
-        border: 2px solid #FFF;
-        border-left: 0;
-        border-top: 0;
-    }
-}
-// formItem左边label
-.el-form-item__label {
-    padding-right: 4px;
-    color: $regular-text;
-}
-.el-input__inner {
-    border-color: $border-light;
-}
+    &.is-component {
+      overflow-y: hidden;
 
-.el-table{
-    border: 1px solid $border-base;
-    border-bottom: none;
-    .el-table__fixed-right-patch{
-        background: $gray-bg;
-    }
-}
-.gem-file {
-    position: relative;
-    display: inline-block;
-    background: $default-color;
-    border: 0;
-    border-radius: 4px;
-    padding: 8px 26px;
-    overflow: hidden;
-    color: #fff;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 24px;
-    input {
-        position: absolute;
-        font-size: 100px;
-        right: 0;
+      .main-cnt {
+        padding: 0;
+        margin-top: 0;
+        height: 100%;
+        min-height: auto;
+      }
+
+      .headerWrapper {
+        position: fixed;
+        width: 100%;
+        left: 0;
         top: 0;
-        opacity: 0;
-    }
-    &:hover {
-        background: $default-hover;
-        color: #fff;
-        text-decoration: none;
-    }
-}
-.gem-float-l{
-    float: left;
-}
-.gem-float-r{
-    float: right;
-}
+        z-index: 1500;
 
-.p-el-btn {
-    display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
-    background: #FFF;
-    border: 1px solid #C0C7D0;
-    color: #303235;
-    -webkit-appearance: none;
-    text-align: center;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: 0;
-    margin: 0;
-    -webkit-transition: .1s;
-    transition: .1s;
-    font-weight: 500;
-    padding: 12px 20px;
-    font-size: 14px;
+        .container {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  a {
+    color: #409EFF;
+    text-decoration: none;
+  }
+
+  code {
+    background-color: #f9fafc;
+    padding: 0 4px;
+    border: 1px solid #eaeefb;
     border-radius: 4px;
-    color: #FFF;
-    background-color: #26BEE6;
-    border-color: #26BEE6;
-    &:hover {
-        background: #51cbeb;
-        border-color: #51cbeb;
-        color: #FFF;
-    }
-}
+  }
 
-.mint-cell .mint-cell-wrapper{
-    background: none;
-}
-.border-1px{
-    position: relative;
-    &::after{
-        content: '';
-        width: vw(690);
-        height: 1px;
-        background-color: $border-base;
-        position: absolute;
-        left: vw(30);
-        bottom: 0;
-        transform: scaleY(0.5);
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  .hljs {
+    line-height: 1.8;
+    font-family: Menlo, Monaco, Consolas, Courier, monospace;
+    font-size: 12px;
+    padding: 18px 24px;
+    background-color: #fafafa;
+    border: solid 1px #eaeefb;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    -webkit-font-smoothing: auto;
+  }
+
+  .main-cnt {
+    margin-top: -80px;
+    padding: 80px 0 340px;
+    box-sizing: border-box;
+    min-height: 100%;
+  }
+
+  .container,
+  .page-container {
+    width: 1140px;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .page-container {
+    padding-top: 55px;
+
+    h2 {
+      font-size: 28px;
+      color: #1f2d3d;
+      margin: 0;
     }
-}
-.el-select-dropdown{
-    max-width: 80%;
-}
-.mint-button--primary{
-    background-color: $default-color;
-}
-.el-select__tags{
-    max-height: 80px;
-    overflow-y: scroll;
-}
-.el-dialog{
-    .el-dialog__header{
-        padding: 0 20px;
-        height: 48px;
-        background: $background;
-        line-height: 48px;
-        font-size: 16px;
-        color: $regular-text;
-        border-radius: 4px 4px 0 0;
-        .el-dialog__headerbtn{
-            top: 13px;
+    h3 {
+      font-size: 22px;
+    }
+    h2, h3, h4, h5 {
+      font-weight: normal;
+      color: #1f2f3d;
+
+      &:hover a {
+        opacity: .4;
+      }
+
+      a {
+        float: left;
+        margin-left: -20px;
+        opacity: 0;
+        cursor: pointer;
+
+        &:hover {
+          opacity: .4;
         }
-        .el-dialog__title {
-            font-weight: 600;
-        }
+      }
     }
-}
-.gem-right-box{
-    padding: 20px;
-}
-.formCancel{
-    .el-button:nth-of-type(1){
-        padding: 8px 20px;
+
+    p {
+      font-size: 14px;
+      color: #5e6d82;
+      line-height: 1.5em;
     }
-    .el-button:nth-of-type(2){
-        padding: 8px 20px;
-        margin-left:20px !important;
+
+    .tip {
+      padding: 8px 16px;
+      background-color: #ECF8FF;
+      border-radius: 4px;
+      border-left: #50bfff 5px solid;
+      margin: 20px 0;
+
+      code {
+        background-color: rgba(255, 255, 255, .7);
+        color: #445368;
+      }
     }
-}
-// 下拉框不要箭头
-.popper__arrow{
-    display: none !important;
-}
+
+    .warning {
+      padding: 8px 16px;
+      background-color: #fff6f7;
+      border-radius: 4px;
+      border-left: #FE6C6F 5px solid;
+      margin: 20px 0;
+
+      code {
+        background-color: rgba(255, 255, 255, .7);
+        color: #445368;
+      }
+    }
+  }
+  .demo {
+    margin: 20px 0;
+  }
+  @media (max-width: 1140px) {
+    .container,
+    .page-container {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container,
+    .page-container {
+      padding: 0 20px;
+    }
+
+    #app.is-component .headerWrapper .container {
+      padding: 0 12px;
+    }
+  }
