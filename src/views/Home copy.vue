@@ -19,7 +19,7 @@
             {
                 type: 'input',
                 key: 'aa',
-                label: '安安安',
+                label: '安安安安安订单',
             },
         ];
     }
